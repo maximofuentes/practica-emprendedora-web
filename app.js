@@ -87,3 +87,22 @@ document.querySelectorAll("[data-copy]").forEach((button) => {
 });
 
 document.getElementById("year").textContent = new Date().getFullYear();
+
+
+// Modal de PE Orange Admin
+const adminModal = document.getElementById("adminModal");
+const openAdminModalButton = document.querySelector("[data-open-admin-modal]");
+const closeAdminModalButtons = document.querySelectorAll("[data-close-admin-modal]");
+const setAdminModal = (open) => {
+  if (!adminModal) return;
+  adminModal.classList.toggle("open", open);
+  adminModal.setAttribute("aria-hidden", String(!open));
+  document.body.style.overflow = open ? "hidden" : "";
+  if (open) adminModal.querySelector(".admin-modal-close")?.focus();
+  else openAdminModalButton?.focus();
+};
+openAdminModalButton?.addEventListener("click", () => setAdminModal(true));
+closeAdminModalButtons.forEach((button) => button.addEventListener("click", () => setAdminModal(false)));
+document.addEventListener("keydown", (event) => {
+  if (event.key === "Escape" && adminModal?.classList.contains("open")) setAdminModal(false);
+});

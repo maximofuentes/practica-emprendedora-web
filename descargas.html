@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Descargá la edición de Práctica Emprendedora que necesitás." />
+  <meta name="theme-color" content="#080b14" />
+  <title>Descargas | Práctica Emprendedora</title>
+  <link rel="icon" href="PE.png" type="image/png" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body class="downloads-page">
+  <header class="site-header scrolled">
+    <div class="container nav-wrap">
+      <a class="brand" href="index.html" aria-label="Práctica Emprendedora, inicio">
+        <img class="brand-mark" src="PE.png" alt="" />
+        <span class="brand-name">Práctica Emprendedora</span>
+      </a>
+      <a class="back-link" href="index.html"><span aria-hidden="true">←</span>Volver al inicio</a>
+    </div>
+  </header>
+
+  <main class="downloads-main">
+    <section class="downloads-hero">
+      <div class="container downloads-heading">
+        <div class="eyebrow"><span class="pulse-dot"></span>Elegí tu edición</div>
+        <h1>Descargá Práctica Emprendedora.</h1>
+        <p>Tres versiones pensadas para necesidades distintas. Probá el simulador, conectate como participante o accedé a la edición administrativa para instituciones.</p>
+      </div>
+    </section>
+
+    <section class="downloads-section">
+      <div class="container">
+        <div class="plans-grid">
+          <article class="download-plan plan-demo reveal">
+            <div class="plan-top">
+              <span class="plan-badge">Para probar</span>
+              <img class="plan-logo plan-logo-demo" src="PEDEMO.png" alt="Práctica Emprendedora Demo" />
+              <div><span class="plan-kicker">PE</span><h2>Demo</h2><p>Una versión de prueba para conocer la experiencia, explorar la dinámica y ver cómo funciona una simulación.</p></div>
+            </div>
+            <div class="plan-divider"></div>
+            <ul class="plan-features"><li><span>✓</span> Versión de demostración</li><li><span>✓</span> Ideal para probar el concepto</li><li><span>✓</span> Instalación independiente</li><li><span>✓</span> Windows</li></ul>
+            <div class="plan-bottom"><span class="plan-price">Gratis</span><a class="plan-btn plan-btn-primary" href="downloads/PracticaEmprendedora-Demo-Setup.exe" download>Descargar <span aria-hidden="true">↓</span></a></div>
+          </article>
+
+          <article class="download-plan plan-client reveal delay-1">
+            <div class="plan-top">
+              <span class="plan-badge plan-badge-blue">Participantes</span>
+              <img class="plan-logo" src="PE.png" alt="Práctica Emprendedora Cliente" />
+              <div><span class="plan-kicker">PE</span><h2>Cliente</h2><p>La aplicación para alumnos y participantes que se conectan a una partida creada por el administrador.</p></div>
+            </div>
+            <div class="plan-divider"></div>
+            <ul class="plan-features"><li><span>✓</span> Acceso a partidas</li><li><span>✓</span> Toma de decisiones</li><li><span>✓</span> Reportes y resultados</li><li><span>✓</span> Windows</li></ul>
+            <div class="plan-bottom"><span class="plan-price">Cliente</span><a class="plan-btn plan-btn-primary" href="https://github.com/maximofuentes/PracticaEmprendedora/releases/latest/download/PracticaEmprendedora-Cliente-Setup.exe">Descargar <span aria-hidden="true">↓</span></a></div>
+          </article>
+
+          <article class="download-plan plan-admin reveal delay-2">
+            <div class="plan-top">
+              <span class="plan-badge plan-badge-orange">Instituciones</span>
+              <img class="plan-logo" src="PE_ORANGE.png" alt="Práctica Emprendedora Orange Admin" />
+              <div><span class="plan-kicker plan-kicker-orange">PE Admin</span><h2>Admin</h2><p>La edición para docentes e instituciones. Permite crear, administrar y controlar las partidas del simulador.</p></div>
+            </div>
+            <div class="plan-divider"></div>
+            <ul class="plan-features"><li><span>✓</span> Creación y control de partidas</li><li><span>✓</span> Administración de empresas</li><li><span>✓</span> Herramientas para docentes</li><li><span>✓</span> Requiere licencia válida</li></ul>
+            <div class="plan-bottom"><span class="plan-price">PE Admin</span><button class="plan-btn plan-btn-orange" type="button" data-open-admin-modal>Descargar <span aria-hidden="true">→</span></button></div>
+          </article>
+        </div>
+
+        <div class="download-note reveal"><span>ⓘ</span><p>PE Demo y PE Cliente se descargan directamente. PE Admin también puede descargarse, pero necesita una licencia válida para funcionar.</p></div>
+      </div>
+    </section>
+  </main>
+
+  <div class="admin-modal" id="adminModal" aria-hidden="true">
+    <div class="admin-modal-backdrop" data-close-admin-modal></div>
+    <section class="admin-modal-card" role="dialog" aria-modal="true" aria-labelledby="adminModalTitle">
+      <button class="admin-modal-close" type="button" aria-label="Cerrar" data-close-admin-modal>×</button>
+      <img src="PE_ORANGE.png" alt="" class="admin-modal-logo" />
+      <span class="modal-eyebrow">PE Admin</span>
+      <h2 id="adminModalTitle">Descargá PE Admin.</h2>
+      <p>Podés descargar el instalador de PE Admin desde acá. Para utilizar el programa vas a necesitar una licencia válida. Si todavía no tenés una, comunicate conmigo para solicitar acceso, consultar condiciones o coordinar la activación.</p>
+      <div class="admin-contact-grid">
+        <a class="admin-contact-option" href="https://wa.me/5491150152368" target="_blank" rel="noopener noreferrer"><span class="contact-icon">WA</span><div><strong>WhatsApp</strong><small>Escribirme ahora</small></div><span aria-hidden="true">→</span></a>
+        <a class="admin-contact-option" href="mailto:maximofuentes.es@gmail.com?subject=Consulta%20PE%20Orange%20Admin"><span class="contact-icon">@</span><div><strong>Email</strong><small>maximofuentes.es@gmail.com</small></div><span aria-hidden="true">→</span></a>
+      </div>
+      <div class="modal-action-row">
+        <a class="modal-download-btn"
+           href="https://github.com/maximofuentes/PracticaEmprendedoraAdmin/releases/latest/download/PracticaEmprendedora-Admin-Setup.exe">
+          Descargar Admin
+          <span aria-hidden="true">↓</span>
+        </a>
+
+        <button class="modal-secondary-btn"
+                type="button"
+                data-close-admin-modal>
+          Volver a las descargas
+        </button>
+      </div>
+    </section>
+  </div>
+
+  <footer class="download-footer"><div class="container download-footer-inner"><div class="download-footer-brand"><img src="PE.png" alt="" /><div><strong>Práctica Emprendedora</strong><span>Simulación empresarial educativa</span></div></div><p>© <span id="year"></span> Práctica Emprendedora</p></div></footer>
+  <script src="app.js"></script>
+</body>
+</html>
