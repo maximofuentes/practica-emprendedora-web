@@ -1350,6 +1350,19 @@ footer {
   .contact-actions {
     justify-content: flex-start;
   }
+  .footer-top {
+    grid-template-columns: 1fr 1fr;
+    gap: 44px 48px;
+  }
+
+  .footer-brand-block {
+    grid-column: 1 / -1;
+    max-width: 620px;
+  }
+
+  .footer-contact {
+    max-width: 390px;
+  }
 }
 
 @media (max-width: 780px) {
