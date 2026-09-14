@@ -177,7 +177,7 @@
       const signout = wrap.querySelector("[data-pe-signout]");
       signout.disabled = true;
       signout.querySelector("span").textContent = "Cerrando…";
-      await sb.auth.signOut();
+      await sb.auth.signOut({ scope: "local" });
       window.location.href = "index.html";
     }, { signal });
 
@@ -190,11 +190,42 @@
     }, { signal });
   }
 
+  async function resolveAdminInstaller() {
+    const { data: userData, error: userError } = await sb.auth.getUser();
+    if (userError || !userData?.user) throw new Error("Tu sesión venció. Volvé a iniciar sesión.");
+
+    const storage = sb.storage.from(ADMIN_BUCKET);
+    const { data: files, error: listError } = await storage.list("", {
+      limit: 100,
+      sortBy: { column: "updated_at", order: "desc" }
+    });
+    if (listError) throw new Error(`No se pudo acceder a la descarga privada: ${listError.message}`);
+
+    const available = (files || []).filter(file => file?.name && !file.name.endsWith("/"));
+    const exact = available.find(file => file.name === ADMIN_INSTALLER);
+    const exe = available.find(file => /\.exe$/i.test(file.name));
+    const selected = exact || exe;
+    if (!selected) {
+      throw new Error(`No encontré ningún instalador .exe dentro del bucket privado "${ADMIN_BUCKET}".`);
+    }
+    return selected.name;
+  }
+
+  function launchSignedDownload(url, filename) {
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = filename;
+    link.rel = "noopener";
+    link.style.display = "none";
+    document.body.appendChild(link);
+    link.click();
+    setTimeout(() => link.remove(), 1000);
+  }
+
   async function downloadAdmin(button) {
     const session = await currentSession();
     if (!session) {
-      const target = encodeURIComponent("admin-download");
-      window.location.href = `cuenta.html?mode=signup&next=${target}`;
+      window.location.href = `cuenta.html?mode=signup&next=${encodeURIComponent("admin-download")}`;
       return;
     }
 
@@ -204,21 +235,23 @@
       button.textContent = "Preparando descarga…";
     }
 
-    const { data, error } = await sb.storage
-      .from(ADMIN_BUCKET)
-      .createSignedUrl(ADMIN_INSTALLER, 120, { download: true });
-
-    if (button) {
-      button.disabled = false;
-      button.textContent = original;
+    try {
+      const installerPath = await resolveAdminInstaller();
+      const { data, error } = await sb.storage
+        .from(ADMIN_BUCKET)
+        .createSignedUrl(installerPath, 180, { download: true });
+      const signedUrl = data?.signedUrl || data?.signedURL;
+      if (error || !signedUrl) throw new Error(error?.message || "Supabase no devolvió una URL de descarga.");
+      launchSignedDownload(signedUrl, installerPath);
+    } catch (error) {
+      console.error("PE Admin download error:", error);
+      alert(error?.message || "No se pudo descargar PE Admin.");
+    } finally {
+      if (button) {
+        button.disabled = false;
+        button.textContent = original;
+      }
     }
-
-    if (error || !data?.signedUrl) {
-      alert("No se pudo preparar la descarga de PE Admin. Revisá que el instalador esté subido al bucket privado 'admin-downloads'.");
-      console.error(error);
-      return;
-    }
-    window.location.href = data.signedUrl;
   }
 
   async function refreshUI() {

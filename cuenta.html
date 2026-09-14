@@ -34,10 +34,10 @@
             <label>Nombre o institución <input id="signupName" name="organization" type="text" autocomplete="organization" maxlength="120" placeholder="Colegio / docente / institución" /></label>
             <label>Email <input id="signupEmail" name="email" type="email" autocomplete="email" inputmode="email" autocapitalize="none" spellcheck="false" required placeholder="colegio@ejemplo.com" /></label>
             <label>Contraseña
-              <span class="password-field"><input id="signupPassword" name="new-password" type="password" autocomplete="new-password" minlength="8" required placeholder="Mínimo 8 caracteres" /><button class="password-toggle" type="button" data-password-toggle="signupPassword" aria-label="Mostrar contraseña" aria-pressed="false">👁</button></span>
+              <span class="password-field"><input id="signupPassword" name="new-password" type="password" autocomplete="new-password" minlength="10" required placeholder="Mínimo 10 caracteres" /><button class="password-toggle" type="button" data-password-toggle="signupPassword" aria-label="Mostrar contraseña" aria-pressed="false">👁</button></span>
             </label>
             <label>Repetir contraseña
-              <span class="password-field"><input id="signupPassword2" name="confirm-password" type="password" autocomplete="new-password" minlength="8" required placeholder="Repetí tu contraseña" /><button class="password-toggle" type="button" data-password-toggle="signupPassword2" aria-label="Mostrar contraseña" aria-pressed="false">👁</button></span>
+              <span class="password-field"><input id="signupPassword2" name="confirm-password" type="password" autocomplete="new-password" minlength="10" required placeholder="Repetí tu contraseña" /><button class="password-toggle" type="button" data-password-toggle="signupPassword2" aria-label="Mostrar contraseña" aria-pressed="false">👁</button></span>
             </label>
             <button class="account-primary-btn account-primary-btn-orange" type="submit">Crear mi cuenta</button>
             <p class="auth-legal">Al registrarte, tu cuenta queda disponible para que una licencia pueda asignarse a ese email.</p>
@@ -54,7 +54,71 @@
               <span class="password-field"><input id="loginPassword" name="password" type="password" autocomplete="current-password" required placeholder="••••••••" /><button class="password-toggle" type="button" data-password-toggle="loginPassword" aria-label="Mostrar contraseña" aria-pressed="false">👁</button></span>
             </label>
             <button class="account-primary-btn" type="submit">Ingresar</button>
+            <button id="forgotPasswordButton" class="account-link-btn" type="button">¿Olvidaste tu contraseña?</button>
             <p id="authMessage" class="form-message" aria-live="polite"></p>
+          </form>
+        </article>
+      </section>
+
+      <section id="forgotPasswordArea" class="password-recovery-shell hidden" aria-labelledby="forgotPasswordTitle">
+        <article class="account-card password-recovery-card">
+          <div class="recovery-icon">#</div>
+          <div class="account-card-head">
+            <div><small>Recuperación segura</small><h2 id="forgotPasswordTitle">Recuperar contraseña</h2></div>
+            <img src="PE.png" alt="" />
+          </div>
+          <p class="auth-card-copy">Ingresá el email de tu cuenta. Si existe una cuenta asociada, te vamos a mandar un código de un solo uso para verificar que sos vos.</p>
+          <form id="forgotPasswordForm" class="account-form" autocomplete="on">
+            <label>Email
+              <input id="forgotEmail" name="email" type="email" autocomplete="email" inputmode="email" autocapitalize="none" spellcheck="false" required placeholder="colegio@ejemplo.com" />
+            </label>
+            <button id="sendRecoveryButton" class="account-primary-btn" type="submit">Enviar código</button>
+            <button id="backToLoginButton" class="account-link-btn" type="button">← Volver al inicio de sesión</button>
+            <p id="forgotPasswordMessage" class="form-message" aria-live="polite"></p>
+          </form>
+        </article>
+      </section>
+
+      <section id="verifyOtpArea" class="password-recovery-shell hidden" aria-labelledby="verifyOtpTitle">
+        <article class="account-card password-recovery-card">
+          <div class="recovery-icon">#</div>
+          <div class="account-card-head">
+            <div><small>Verificación por email</small><h2 id="verifyOtpTitle">Ingresá el código</h2></div>
+            <img src="PE.png" alt="" />
+          </div>
+          <p class="auth-card-copy">Mandamos un código al email indicado. Pegalo acá para continuar. No hace falta abrir ningún link del correo.</p>
+          <form id="verifyOtpForm" class="account-form" autocomplete="on">
+            <label>Código de seguridad
+              <input id="recoveryOtp" name="one-time-code" class="otp-input" type="text" inputmode="numeric" autocomplete="one-time-code" pattern="[0-9]*" maxlength="12" required placeholder="000000" />
+            </label>
+            <div class="otp-meta">
+              <span id="recoveryEmailLabel"></span>
+              <button id="changeRecoveryEmailButton" class="account-link-btn account-link-btn-inline" type="button">Cambiar email</button>
+            </div>
+            <button id="verifyOtpButton" class="account-primary-btn" type="submit">Verificar código</button>
+            <button id="resendRecoveryButton" class="account-secondary-btn recovery-secondary" type="button">Reenviar código</button>
+            <p id="verifyOtpMessage" class="form-message" aria-live="polite"></p>
+          </form>
+        </article>
+      </section>
+
+      <section id="resetPasswordArea" class="password-recovery-shell hidden" aria-labelledby="resetPasswordTitle">
+        <article class="account-card password-recovery-card">
+          <div class="recovery-icon recovery-icon-good">✓</div>
+          <div class="account-card-head">
+            <div><small>Identidad verificada</small><h2 id="resetPasswordTitle">Elegí una contraseña nueva</h2></div>
+            <img src="PE.png" alt="" />
+          </div>
+          <p class="auth-card-copy">La contraseña nueva debe tener al menos 10 caracteres. Cuando la cambies, cerraremos las demás sesiones para proteger tu cuenta.</p>
+          <form id="resetPasswordForm" class="account-form" autocomplete="on">
+            <label>Nueva contraseña
+              <span class="password-field"><input id="resetPassword" name="new-password" type="password" autocomplete="new-password" minlength="10" required placeholder="Mínimo 10 caracteres" /><button class="password-toggle" type="button" data-password-toggle="resetPassword" aria-label="Mostrar contraseña" aria-pressed="false">👁</button></span>
+            </label>
+            <label>Repetir contraseña
+              <span class="password-field"><input id="resetPassword2" name="confirm-password" type="password" autocomplete="new-password" minlength="10" required placeholder="Repetí tu contraseña" /><button class="password-toggle" type="button" data-password-toggle="resetPassword2" aria-label="Mostrar contraseña" aria-pressed="false">👁</button></span>
+            </label>
+            <button id="saveNewPasswordButton" class="account-primary-btn" type="submit">Guardar contraseña nueva</button>
+            <p id="resetPasswordMessage" class="form-message" aria-live="polite"></p>
           </form>
         </article>
       </section>

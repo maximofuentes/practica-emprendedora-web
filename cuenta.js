@@ -3,6 +3,9 @@
   const $ = (id) => document.getElementById(id);
   const authArea = $("authArea");
   const accountPanel = $("accountPanel");
+  const forgotPasswordArea = $("forgotPasswordArea");
+  const verifyOtpArea = $("verifyOtpArea");
+  const resetPasswordArea = $("resetPasswordArea");
   const noLicense = $("noLicense");
   const licenseTabs = $("licenseTabs");
   const adminTabButton = $("adminTabButton");
@@ -13,17 +16,23 @@
   const requestedMode = params.get("mode") || "";
   const ADMIN_BUCKET = "admin-downloads";
   const ADMIN_INSTALLER = "PracticaEmprendedora-Admin-Setup.exe";
+  const MIN_PASSWORD_LENGTH = 10;
 
   let currentLicense = null;
   let currentProfile = null;
   let adminProfiles = [];
   let adminLicenses = [];
   let selectedAdminUserId = null;
+  let recoveryActive = requestedMode === "recovery";
+  let recoverySessionReady = false;
+  let recoveryEmail = sessionStorage.getItem("pe_recovery_email") || "";
 
   const publicKey = cfg.publishableKey || cfg.anonKey;
   if (!window.supabase || !cfg.url || !publicKey || cfg.url.includes("TU-PROYECTO")) {
     $("authMessage").textContent = "Falta configurar Supabase en supabase-config.js.";
     $("signupMessage").textContent = "Falta configurar Supabase en supabase-config.js.";
+    if ($("forgotPasswordMessage")) $("forgotPasswordMessage").textContent = "Falta configurar Supabase en supabase-config.js.";
+    if ($("resetPasswordMessage")) $("resetPasswordMessage").textContent = "Falta configurar Supabase en supabase-config.js.";
     return;
   }
 
@@ -45,19 +54,87 @@
 
   const statusLabel = (status) => ({ active: "Activa", paused: "Pausada", revoked: "Revocada" }[status] || "Sin licencia");
 
-  document.querySelectorAll("[data-password-toggle]").forEach((button) => {
-    button.addEventListener("click", () => {
-      const input = $(button.dataset.passwordToggle);
-      if (!input) return;
-      const visible = input.type === "text";
-      input.type = visible ? "password" : "text";
-      button.setAttribute("aria-pressed", String(!visible));
-      button.setAttribute("aria-label", visible ? "Mostrar contraseña" : "Ocultar contraseña");
-      button.classList.toggle("is-visible", !visible);
-      input.focus({ preventScroll: true });
-      try { input.setSelectionRange(input.value.length, input.value.length); } catch {}
-    });
+  function setPasswordVisibility(button) {
+    const input = $(button.dataset.passwordToggle);
+    if (!input) return;
+    const showing = input.type === "text";
+    input.type = showing ? "password" : "text";
+    button.classList.toggle("is-visible", !showing);
+    button.setAttribute("aria-pressed", String(!showing));
+    button.setAttribute("aria-label", showing ? "Mostrar contraseña" : "Ocultar contraseña");
+  }
+
+  document.querySelectorAll("[data-password-toggle]").forEach(button => {
+    button.addEventListener("click", () => setPasswordVisibility(button));
   });
+
+  function hideRecoveryAreas() {
+    forgotPasswordArea?.classList.add("hidden");
+    verifyOtpArea?.classList.add("hidden");
+    resetPasswordArea?.classList.add("hidden");
+  }
+
+  function showAuthChoice() {
+    recoveryActive = false;
+    recoverySessionReady = false;
+    hideRecoveryAreas();
+    accountPanel.classList.add("hidden");
+    authArea.classList.remove("hidden");
+    const email = $("forgotEmail")?.value?.trim();
+    if (email && !$("loginEmail").value) $("loginEmail").value = email;
+  }
+
+  function showForgotPassword() {
+    recoveryActive = false;
+    recoverySessionReady = false;
+    authArea.classList.add("hidden");
+    accountPanel.classList.add("hidden");
+    verifyOtpArea?.classList.add("hidden");
+    resetPasswordArea?.classList.add("hidden");
+    forgotPasswordArea?.classList.remove("hidden");
+    const loginEmail = $("loginEmail")?.value?.trim();
+    if (loginEmail && !$("forgotEmail").value) $("forgotEmail").value = loginEmail;
+    setTimeout(() => $("forgotEmail")?.focus(), 30);
+  }
+
+  function showVerifyOtp(email = recoveryEmail) {
+    recoveryActive = false;
+    recoverySessionReady = false;
+    recoveryEmail = String(email || "").trim().toLowerCase();
+    if (recoveryEmail) sessionStorage.setItem("pe_recovery_email", recoveryEmail);
+    authArea.classList.add("hidden");
+    accountPanel.classList.add("hidden");
+    forgotPasswordArea?.classList.add("hidden");
+    resetPasswordArea?.classList.add("hidden");
+    verifyOtpArea?.classList.remove("hidden");
+    if ($("recoveryEmailLabel")) $("recoveryEmailLabel").textContent = recoveryEmail || "Email de recuperación";
+    if ($("verifyOtpMessage")) {
+      $("verifyOtpMessage").classList.remove("success");
+      $("verifyOtpMessage").textContent = "Ingresá el código que recibiste por email.";
+    }
+    setTimeout(() => $("recoveryOtp")?.focus(), 30);
+  }
+
+  function showResetPassword(sessionReady = false) {
+    recoveryActive = true;
+    recoverySessionReady = Boolean(sessionReady);
+    authArea.classList.add("hidden");
+    accountPanel.classList.add("hidden");
+    forgotPasswordArea?.classList.add("hidden");
+    verifyOtpArea?.classList.add("hidden");
+    resetPasswordArea?.classList.remove("hidden");
+    const form = $("resetPasswordForm");
+    const button = $("saveNewPasswordButton");
+    if (form) form.classList.toggle("recovery-waiting", !sessionReady);
+    if (button) button.disabled = !sessionReady;
+    if ($("resetPasswordMessage")) {
+      $("resetPasswordMessage").classList.remove("success");
+      $("resetPasswordMessage").textContent = sessionReady
+        ? "Identidad verificada. Elegí una contraseña nueva."
+        : "Validando la recuperación…";
+    }
+    if (sessionReady) setTimeout(() => $("resetPassword")?.focus(), 30);
+  }
 
   const switchTab = (name) => {
     document.querySelectorAll(".account-tab").forEach(b => b.classList.toggle("active", b.dataset.accountTab === name));
@@ -65,17 +142,55 @@
   };
   document.querySelectorAll("[data-account-tab]").forEach(b => b.addEventListener("click", () => switchTab(b.dataset.accountTab)));
 
+  async function resolveAdminInstaller() {
+    const { data: userData, error: userError } = await sb.auth.getUser();
+    if (userError || !userData?.user) throw new Error("Tu sesión venció. Volvé a iniciar sesión.");
+
+    const storage = sb.storage.from(ADMIN_BUCKET);
+    const { data: files, error: listError } = await storage.list("", {
+      limit: 100,
+      sortBy: { column: "updated_at", order: "desc" }
+    });
+    if (listError) throw new Error(`No se pudo acceder a la descarga privada: ${listError.message}`);
+
+    const available = (files || []).filter(file => file?.name && !file.name.endsWith("/"));
+    const exact = available.find(file => file.name === ADMIN_INSTALLER);
+    const exe = available.find(file => /\.exe$/i.test(file.name));
+    const selected = exact || exe;
+    if (!selected) {
+      throw new Error(`No encontré ningún instalador .exe dentro del bucket privado "${ADMIN_BUCKET}".`);
+    }
+    return selected.name;
+  }
+
+  function launchSignedDownload(url, filename) {
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = filename;
+    link.rel = "noopener";
+    link.style.display = "none";
+    document.body.appendChild(link);
+    link.click();
+    setTimeout(() => link.remove(), 1000);
+  }
+
   async function downloadAdmin(button) {
     const original = button?.textContent || "Descargar PE Admin ↓";
     if (button) { button.disabled = true; button.textContent = "Preparando descarga…"; }
-    const { data, error } = await sb.storage.from(ADMIN_BUCKET).createSignedUrl(ADMIN_INSTALLER, 120, { download: true });
-    if (button) { button.disabled = false; button.textContent = original; }
-    if (error || !data?.signedUrl) {
-      alert("No se pudo preparar la descarga. Revisá el bucket privado 'admin-downloads' y el nombre del instalador.");
-      console.error(error);
-      return;
+    try {
+      const installerPath = await resolveAdminInstaller();
+      const { data, error } = await sb.storage
+        .from(ADMIN_BUCKET)
+        .createSignedUrl(installerPath, 180, { download: true });
+      const signedUrl = data?.signedUrl || data?.signedURL;
+      if (error || !signedUrl) throw new Error(error?.message || "Supabase no devolvió una URL de descarga.");
+      launchSignedDownload(signedUrl, installerPath);
+    } catch (error) {
+      console.error("PE Admin download error:", error);
+      alert(error?.message || "No se pudo descargar PE Admin.");
+    } finally {
+      if (button) { button.disabled = false; button.textContent = original; }
     }
-    window.location.href = data.signedUrl;
   }
 
   async function loadDevices() {
@@ -215,13 +330,25 @@
 
   async function loadAccount(session) {
     const user = session?.user;
-    if (!user) {
-      authArea.classList.remove("hidden");
-      accountPanel.classList.add("hidden");
-      if (requestedMode === "signup") setTimeout(() => $("registerCard")?.scrollIntoView({ behavior: "smooth", block: "center" }), 120);
+
+    if (recoveryActive) {
+      showResetPassword(Boolean(user));
       return;
     }
 
+    if (!user) {
+      hideRecoveryAreas();
+      authArea.classList.remove("hidden");
+      accountPanel.classList.add("hidden");
+      if (requestedMode === "signup") setTimeout(() => $("registerCard")?.scrollIntoView({ behavior: "smooth", block: "center" }), 120);
+      if (params.get("reset") === "success") {
+        $("authMessage").classList.add("success");
+        $("authMessage").textContent = "Contraseña actualizada. Iniciá sesión con tu nueva contraseña.";
+      }
+      return;
+    }
+
+    hideRecoveryAreas();
     authArea.classList.add("hidden");
     accountPanel.classList.remove("hidden");
     $("accountEmail").textContent = user.email;
@@ -275,7 +402,7 @@
     const password2 = $("signupPassword2").value;
     const displayName = $("signupName").value.trim();
     if (password !== password2) { $("signupMessage").textContent = "Las contraseñas no coinciden."; return; }
-    if (password.length < 8) { $("signupMessage").textContent = "La contraseña debe tener al menos 8 caracteres."; return; }
+    if (password.length < MIN_PASSWORD_LENGTH) { $("signupMessage").textContent = `La contraseña debe tener al menos ${MIN_PASSWORD_LENGTH} caracteres.`; return; }
     $("signupMessage").classList.remove("success");
     $("signupMessage").textContent = "Creando tu cuenta…";
 
@@ -298,6 +425,138 @@
     }
   });
 
+  $("forgotPasswordButton").addEventListener("click", showForgotPassword);
+  $("backToLoginButton").addEventListener("click", showAuthChoice);
+  $("changeRecoveryEmailButton")?.addEventListener("click", () => {
+    if ($("forgotEmail") && recoveryEmail) $("forgotEmail").value = recoveryEmail;
+    showForgotPassword();
+  });
+
+  async function requestRecoveryCode(email, { showGeneric = true } = {}) {
+    const cleanEmail = String(email || "").trim().toLowerCase();
+    if (!cleanEmail) throw new Error("Ingresá un email válido.");
+    const redirectTo = `${location.origin}${location.pathname}?mode=forgot`;
+    const { error } = await sb.auth.resetPasswordForEmail(cleanEmail, { redirectTo });
+    if (error && (error.status === 429 || String(error.message || "").toLowerCase().includes("rate"))) {
+      throw new Error("Se hicieron demasiados intentos. Esperá un minuto antes de volver a pedir el código.");
+    }
+    if (error) {
+      console.error("Password recovery error:", error);
+      throw new Error(showGeneric ? "No pudimos enviar el código en este momento. Intentá nuevamente en unos minutos." : error.message);
+    }
+    recoveryEmail = cleanEmail;
+    sessionStorage.setItem("pe_recovery_email", recoveryEmail);
+    return cleanEmail;
+  }
+
+  $("forgotPasswordForm").addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const email = $("forgotEmail").value.trim().toLowerCase();
+    const button = $("sendRecoveryButton");
+    const message = $("forgotPasswordMessage");
+    button.disabled = true;
+    message.classList.remove("success");
+    message.textContent = "Enviando código…";
+    try {
+      await requestRecoveryCode(email);
+      message.classList.add("success");
+      message.textContent = "Si existe una cuenta con ese email, el código fue enviado. Revisá también Spam.";
+      setTimeout(() => showVerifyOtp(email), 350);
+    } catch (error) {
+      message.textContent = error.message;
+    } finally {
+      button.disabled = false;
+    }
+  });
+
+  $("resendRecoveryButton")?.addEventListener("click", async () => {
+    const button = $("resendRecoveryButton");
+    const message = $("verifyOtpMessage");
+    if (!recoveryEmail) { showForgotPassword(); return; }
+    button.disabled = true;
+    message.classList.remove("success");
+    message.textContent = "Reenviando código…";
+    try {
+      await requestRecoveryCode(recoveryEmail);
+      message.classList.add("success");
+      message.textContent = "Código reenviado. Usá siempre el último que recibiste.";
+    } catch (error) {
+      message.textContent = error.message;
+    } finally {
+      button.disabled = false;
+    }
+  });
+
+  $("verifyOtpForm")?.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const token = String($("recoveryOtp")?.value || "").replace(/\s+/g, "");
+    const button = $("verifyOtpButton");
+    const message = $("verifyOtpMessage");
+    if (!recoveryEmail) { showForgotPassword(); return; }
+    if (!/^\d{4,12}$/.test(token)) {
+      message.textContent = "Ingresá el código numérico que recibiste por email.";
+      return;
+    }
+    button.disabled = true;
+    message.classList.remove("success");
+    message.textContent = "Verificando código…";
+    const { data, error } = await sb.auth.verifyOtp({
+      email: recoveryEmail,
+      token,
+      type: "recovery"
+    });
+    button.disabled = false;
+    if (error || !data?.session) {
+      console.error("Recovery OTP error:", error);
+      message.textContent = "El código no es válido o venció. Pedí uno nuevo e ingresá siempre el último.";
+      return;
+    }
+    sessionStorage.removeItem("pe_recovery_email");
+    recoveryActive = true;
+    recoverySessionReady = true;
+    message.classList.add("success");
+    message.textContent = "Código correcto ✓";
+    setTimeout(() => showResetPassword(true), 300);
+  });
+
+  $("resetPasswordForm").addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const password = $("resetPassword").value;
+    const password2 = $("resetPassword2").value;
+    const message = $("resetPasswordMessage");
+    const button = $("saveNewPasswordButton");
+
+    message.classList.remove("success");
+    if (!recoverySessionReady) {
+      message.textContent = "La verificación venció. Volvé a solicitar un código nuevo.";
+      return;
+    }
+    if (password.length < MIN_PASSWORD_LENGTH) {
+      message.textContent = `La contraseña debe tener al menos ${MIN_PASSWORD_LENGTH} caracteres.`;
+      return;
+    }
+    if (password !== password2) {
+      message.textContent = "Las contraseñas no coinciden.";
+      return;
+    }
+
+    button.disabled = true;
+    message.textContent = "Guardando la contraseña nueva…";
+    const { error } = await sb.auth.updateUser({ password });
+    if (error) {
+      button.disabled = false;
+      message.textContent = error.message || "No se pudo cambiar la contraseña.";
+      return;
+    }
+
+    // Después de una recuperación cerramos TODAS las sesiones para que un
+    // refresh token robado anteriormente deje de servir.
+    await sb.auth.signOut({ scope: "global" });
+    message.classList.add("success");
+    message.textContent = "Contraseña actualizada ✓ Redirigiendo al inicio de sesión…";
+    setTimeout(() => { location.href = "cuenta.html?reset=success"; }, 900);
+  });
+
   $("loginForm").addEventListener("submit", async (e) => {
     e.preventDefault();
     $("authMessage").classList.remove("success");
@@ -309,7 +568,7 @@
   });
 
   $("downloadAdminFromAccount").addEventListener("click", (e) => downloadAdmin(e.currentTarget));
-  $("logoutButton").addEventListener("click", async () => { await sb.auth.signOut(); location.href = "cuenta.html"; });
+  $("logoutButton").addEventListener("click", async () => { await sb.auth.signOut({ scope: "local" }); location.href = "cuenta.html"; });
   $("refreshAdmin").addEventListener("click", loadAdmin);
   $("adminUserSearch").addEventListener("input", (e) => renderAdminUsers(e.target.value));
 
@@ -341,6 +600,29 @@
     if (!error) await loadAdmin();
   });
 
-  sb.auth.getSession().then(({ data }) => loadAccount(data.session));
-  sb.auth.onAuthStateChange((_event, session) => loadAccount(session));
+  sb.auth.getSession().then(({ data }) => {
+    if (requestedMode === "forgot") {
+      if (recoveryEmail) showVerifyOtp(recoveryEmail);
+      else showForgotPassword();
+      return;
+    }
+    if (requestedMode === "recovery") {
+      recoveryActive = true;
+      recoverySessionReady = Boolean(data.session);
+      showResetPassword(recoverySessionReady);
+      return;
+    }
+    loadAccount(data.session);
+  });
+
+  sb.auth.onAuthStateChange((event, session) => {
+    if (event === "PASSWORD_RECOVERY") {
+      recoveryActive = true;
+      recoverySessionReady = Boolean(session);
+      setTimeout(() => showResetPassword(recoverySessionReady), 0);
+      return;
+    }
+    if (recoveryActive) return;
+    setTimeout(() => loadAccount(session), 0);
+  });
 })();
