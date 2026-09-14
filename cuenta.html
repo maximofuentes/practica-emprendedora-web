@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#080b14" />
+  <meta name="description" content="Creá tu cuenta de Práctica Emprendedora, descargá PE Admin y administrá tu licencia." />
+  <title>Cuenta | Práctica Emprendedora</title>
+  <link rel="icon" href="PE.png" type="image/png" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body class="account-page">
+  <header class="site-header scrolled">
+    <div class="container nav-wrap">
+      <a class="brand" href="index.html"><img class="brand-mark" src="PE.png" alt="" /><span class="brand-name">Práctica Emprendedora</span></a>
+      <div class="download-nav-actions"><a class="back-link" href="descargas.html">Descargas</a><a class="back-link" href="index.html">← Inicio</a></div>
+    </div>
+  </header>
+
+  <main class="account-main">
+    <section class="container account-shell">
+      <div class="account-intro">
+        <div class="eyebrow"><span class="pulse-dot"></span>Cuenta Práctica Emprendedora</div>
+        <h1>Registrate, descargá y gestioná tu acceso.</h1>
+        <p>La cuenta es gratuita y obligatoria para descargar PE Admin. Después, una licencia puede asignarse directamente a tu email desde el panel administrativo.</p>
+      </div>
+
+      <section id="authArea" class="auth-choice-grid">
+        <article id="registerCard" class="account-card auth-card auth-card-featured">
+          <div class="auth-card-badge">PASO 1 · CREÁ TU CUENTA</div>
+          <div class="account-card-head"><div><small>Registro gratuito</small><h2>Crear cuenta</h2></div><img src="PE_ORANGE.png" alt="" /></div>
+          <p class="auth-card-copy">Usá el email al que querés que se asocie tu futura licencia. No necesitás una licencia para registrarte ni para descargar el instalador.</p>
+          <form id="signupForm" class="account-form" autocomplete="on">
+            <label>Nombre o institución <input id="signupName" name="organization" type="text" autocomplete="organization" maxlength="120" placeholder="Colegio / docente / institución" /></label>
+            <label>Email <input id="signupEmail" name="email" type="email" autocomplete="email" inputmode="email" autocapitalize="none" spellcheck="false" required placeholder="colegio@ejemplo.com" /></label>
+            <label>Contraseña
+              <span class="password-field"><input id="signupPassword" name="new-password" type="password" autocomplete="new-password" minlength="8" required placeholder="Mínimo 8 caracteres" /><button class="password-toggle" type="button" data-password-toggle="signupPassword" aria-label="Mostrar contraseña" aria-pressed="false">👁</button></span>
+            </label>
+            <label>Repetir contraseña
+              <span class="password-field"><input id="signupPassword2" name="confirm-password" type="password" autocomplete="new-password" minlength="8" required placeholder="Repetí tu contraseña" /><button class="password-toggle" type="button" data-password-toggle="signupPassword2" aria-label="Mostrar contraseña" aria-pressed="false">👁</button></span>
+            </label>
+            <button class="account-primary-btn account-primary-btn-orange" type="submit">Crear mi cuenta</button>
+            <p class="auth-legal">Al registrarte, tu cuenta queda disponible para que una licencia pueda asignarse a ese email.</p>
+            <p id="signupMessage" class="form-message" aria-live="polite"></p>
+          </form>
+        </article>
+
+        <article id="authCard" class="account-card auth-card">
+          <div class="account-card-head"><div><small>Ya tengo cuenta</small><h2>Iniciar sesión</h2></div><img src="PE.png" alt="" /></div>
+          <p class="auth-card-copy">Entrá para ver tu licencia, administrar dispositivos o descargar PE Admin con tu cuenta.</p>
+          <form id="loginForm" class="account-form" autocomplete="on">
+            <label>Email<input id="loginEmail" name="email" type="email" autocomplete="email" inputmode="email" autocapitalize="none" spellcheck="false" required placeholder="colegio@ejemplo.com" /></label>
+            <label>Contraseña
+              <span class="password-field"><input id="loginPassword" name="password" type="password" autocomplete="current-password" required placeholder="••••••••" /><button class="password-toggle" type="button" data-password-toggle="loginPassword" aria-label="Mostrar contraseña" aria-pressed="false">👁</button></span>
+            </label>
+            <button class="account-primary-btn" type="submit">Ingresar</button>
+            <p id="authMessage" class="form-message" aria-live="polite"></p>
+          </form>
+        </article>
+      </section>
+
+      <section id="accountPanel" class="account-panel hidden">
+        <div class="account-toolbar">
+          <div><span class="account-status-dot"></span><strong id="accountEmail"></strong></div>
+          <div class="account-toolbar-actions"><a href="descargas.html" class="account-secondary-link">Descargas</a><button id="logoutButton" class="account-secondary-btn" type="button">Cerrar sesión</button></div>
+        </div>
+
+        <section id="pendingDownloadCard" class="download-ready-card hidden">
+          <div><small>CUENTA VERIFICADA</small><h2>Ya podés descargar PE Admin.</h2><p>La descarga requiere una cuenta, pero el programa sólo se habilita si tu email tiene una licencia activa.</p></div>
+          <button id="downloadAdminFromAccount" class="account-primary-btn account-primary-btn-orange" type="button">Descargar PE Admin ↓</button>
+        </section>
+
+        <div id="noLicense" class="account-card hidden no-license-card">
+          <div class="no-license-icon">@</div>
+          <div><small>Cuenta activa</small><h2>Tu email todavía no tiene una licencia asignada.</h2><p>Podés descargar PE Admin igualmente. Cuando el administrador asigne una licencia a <strong id="noLicenseEmail"></strong>, la pestaña <strong>Licencia actual</strong> aparecerá automáticamente.</p></div>
+        </div>
+
+        <div id="licenseTabs" class="hidden">
+          <div class="account-tabs">
+            <button class="account-tab active" data-account-tab="license" type="button">Licencia actual</button>
+            <button class="account-tab" data-account-tab="devices" type="button">Dispositivos</button>
+            <button id="adminTabButton" class="account-tab account-tab-admin hidden" data-account-tab="admin" type="button">Administrar licencias</button>
+          </div>
+
+          <div id="tab-license" class="account-tab-panel active">
+            <section class="license-hero-card">
+              <div class="license-title-row"><div><span id="licenseBadge" class="license-state">ACTIVA</span><h2 id="licenseCustomer">Licencia</h2><p id="licensePlan">PE Admin</p></div><img src="PE_ORANGE.png" alt="" /></div>
+              <div class="license-metrics">
+                <div><span>Vencimiento</span><strong id="licenseExpiry">—</strong></div>
+                <div><span>Dispositivos</span><strong id="licenseDevicesMetric">—</strong></div>
+                <div><span>Estado</span><strong id="licenseStatusMetric">—</strong></div>
+              </div>
+            </section>
+          </div>
+
+          <div id="tab-devices" class="account-tab-panel">
+            <section class="account-card"><div class="account-section-head"><div><small>Equipos</small><h2>Dispositivos vinculados</h2></div><span id="deviceLimit" class="soft-badge"></span></div><div id="devicesList" class="devices-list"></div></section>
+          </div>
+
+          <div id="tab-admin" class="account-tab-panel">
+            <section class="admin-dashboard-head">
+              <div><div class="eyebrow admin-eyebrow">Panel privado</div><h2>Licencias por email</h2><p>Buscá una cuenta registrada, asignale una licencia y administrá sus dispositivos desde un solo lugar.</p></div>
+              <button id="refreshAdmin" class="account-secondary-btn" type="button">↻ Actualizar</button>
+            </section>
+
+            <div class="admin-stats-grid">
+              <article><span>Cuentas registradas</span><strong id="adminStatUsers">0</strong></article>
+              <article><span>Licencias activas</span><strong id="adminStatActive">0</strong></article>
+              <article><span>Sin licencia</span><strong id="adminStatUnlicensed">0</strong></article>
+              <article><span>Vencen en 30 días</span><strong id="adminStatExpiring">0</strong></article>
+            </div>
+
+            <section class="admin-license-workspace">
+              <aside class="admin-user-browser">
+                <div class="admin-browser-head"><div><small>Usuarios</small><strong>Elegí un email</strong></div><span id="adminUserCount" class="soft-badge">0</span></div>
+                <div class="admin-search-wrap"><span>⌕</span><input id="adminUserSearch" type="search" placeholder="Buscar email o institución…" /></div>
+                <div id="adminUsersList" class="admin-users-list"></div>
+              </aside>
+
+              <div class="admin-license-editor">
+                <div id="adminEmptySelection" class="admin-empty-selection"><span>←</span><h3>Seleccioná una cuenta</h3><p>Elegí un usuario de la lista para crear o modificar su licencia.</p></div>
+
+                <div id="adminEditorContent" class="hidden">
+                  <div class="admin-selected-user">
+                    <div class="admin-avatar">@</div>
+                    <div><small>CUENTA SELECCIONADA</small><h3 id="adminSelectedEmail">—</h3><p id="adminSelectedName">—</p></div>
+                    <span id="adminSelectedLicenseState" class="admin-state-chip">Sin licencia</span>
+                  </div>
+
+                  <div class="admin-editor-section">
+                    <div class="admin-editor-section-title"><span>01</span><div><strong>Datos de la licencia</strong><small>La licencia queda vinculada al email seleccionado.</small></div></div>
+                    <div class="admin-grid admin-grid-polished">
+                      <label>Cliente / institución<input id="adminCustomer" type="text" placeholder="Ej. Colegio San Martín" /></label>
+                      <label>Plan<input id="adminPlan" type="text" value="PE Admin" /></label>
+                      <label>Estado<select id="adminStatus"><option value="active">Activa</option><option value="paused">Pausada</option><option value="revoked">Revocada</option></select></label>
+                      <label>Máx. dispositivos<input id="adminMaxDevices" type="number" min="1" max="50" value="1" /></label>
+                      <label class="admin-field-wide">Vencimiento<input id="adminExpiry" type="datetime-local" /></label>
+                    </div>
+                    <div class="admin-actions polished-actions"><button id="saveLicense" class="account-primary-btn" type="button">Guardar licencia</button><button id="deleteLicense" class="account-danger-btn" type="button">Eliminar licencia</button></div>
+                    <p id="adminMessage" class="form-message"></p>
+                  </div>
+
+                  <div class="admin-editor-section">
+                    <div class="admin-editor-section-title"><span>02</span><div><strong>Dispositivos</strong><small>Revocá una PC o liberá el vínculo para recuperar un cupo.</small></div></div>
+                    <div id="adminDevicesList" class="devices-list"></div>
+                  </div>
+                </div>
+              </div>
+            </section>
+          </div>
+        </div>
+      </section>
+    </section>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="supabase-config.js"></script>
+  <script src="app.js"></script>
+  <script src="cuenta.js"></script>
+  <script src="site-auth.js"></script>
+</body>
+</html>

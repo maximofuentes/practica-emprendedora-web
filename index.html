@@ -27,7 +27,9 @@
         <a href="#como-funciona">Cómo funciona</a>
         <a href="#experiencia">Experiencia</a>
         <a href="#colegios">Para colegios</a>
-        <a class="nav-cta" href="descargas.html">Descargar</a>
+        <a href="descargas.html">Descargas</a>
+        <a href="cuenta.html" data-auth-account-label>Ingresar</a>
+        <a class="nav-cta nav-cta-account" href="cuenta.html?mode=signup&next=admin-download">Crear cuenta</a>
       </nav>
     </div>
   </header>
@@ -53,15 +55,14 @@
           </p>
 
           <div class="hero-actions">
-            <a class="btn btn-primary" href="descargas.html">
-              Descargar
+            <a class="btn btn-primary" href="cuenta.html?mode=signup&next=admin-download">
+              Crear cuenta gratis
               <span aria-hidden="true">→</span>
             </a>
-            <a class="btn btn-secondary" href="#como-funciona">
-              Descubrir cómo funciona
-            </a>
-            <a class="btn btn-secondary" href="#colegios">Soy docente / colegio</a>
+            <a class="btn btn-secondary" href="descargas.html">Ver descargas</a>
+            <a class="btn btn-secondary" href="#como-funciona">Descubrir cómo funciona</a>
           </div>
+          <p class="hero-account-note">PE Admin requiere una cuenta registrada para descargarse. La licencia se asigna después directamente a tu email.</p>
 
           <div class="hero-notes">
             <div><strong>Dinámico</strong><span>Decisiones por rondas</span></div>
@@ -103,14 +104,14 @@
                     <em>Producto</em>
                   </article>
                   <article class="kpi">
-                    <span>Marketing</span>
+                    <span>Publicidad</span>
                     <strong>$8.500</strong>
                     <em>Inversión</em>
                   </article>
                   <article class="kpi">
-                    <span>I+D</span>
+                    <span>Calidad</span>
                     <strong>$24.300</strong>
-                    <em>Acumulado</em>
+                    <em>Acumulada</em>
                   </article>
                 </div>
 
@@ -149,7 +150,7 @@
           </div>
 
           <div class="floating-card floating-b">
-            <span>Informe industrial</span>
+            <span>Informe Global</span>
             <strong>Listo ✓</strong>
           </div>
         </div>
@@ -160,8 +161,8 @@
       <div class="container trust-inner">
         <span>Precio</span><i></i>
         <span>Producción</span><i></i>
-        <span>Marketing</span><i></i>
-        <span>I+D</span><i></i>
+        <span>Publicidad</span><i></i>
+        <span>Calidad</span><i></i>
         <span>Financiación</span><i></i>
         <span>Competencia</span>
       </div>
@@ -184,8 +185,8 @@
             <div class="feature-icon">01</div>
             <h3>Decidir</h3>
             <p>
-              Precio, producción, marketing, investigación, planta,
-              capacitación y financiación.
+              Precio, producción, publicidad, calidad, fabrica,
+              potenciación y financiación.
             </p>
           </article>
 
@@ -274,8 +275,8 @@
           </p>
 
           <ul class="check-list">
-            <li><span>✓</span> Resultados económicos por ronda</li>
-            <li><span>✓</span> Informe industrial del mercado</li>
+            <li><span>✓</span> Documentos de Status por ronda</li>
+            <li><span>✓</span> Informe Global del mercado</li>
             <li><span>✓</span> Decisiones comparables entre equipos</li>
             <li><span>✓</span> Administración central para el docente</li>
           </ul>
@@ -284,7 +285,7 @@
         <div class="report-card reveal delay-1">
           <div class="report-head">
             <div>
-              <small>Informe industrial</small>
+              <small>Informe Global</small>
               <strong>Mercado · Ronda 4</strong>
             </div>
             <span>Actualizado</span>
@@ -376,6 +377,7 @@
             <a href="#experiencia">Experiencia</a>
             <a href="#colegios">Para colegios</a>
             <a href="descargas.html">Descargar</a>
+            <a href="cuenta.html">Mi cuenta</a>
           </div>
         </nav>
 
@@ -437,6 +439,9 @@
     </div>
   </footer>
 
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="supabase-config.js"></script>
   <script src="app.js"></script>
+  <script src="site-auth.js"></script>
 </body>
 </html>
