@@ -4,8 +4,18 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="description" content="Descargá la edición de Práctica Emprendedora que necesitás." />
-  <meta name="theme-color" content="#080b14" />
+  <meta name="theme-color" content="#ffffff" />
   <title>Descargas | Práctica Emprendedora</title>
+  <script>
+    (() => {
+      try {
+        const saved = localStorage.getItem("pe-theme");
+        document.documentElement.dataset.theme = saved === "dark" ? "dark" : "light";
+      } catch (_) {
+        document.documentElement.dataset.theme = "light";
+      }
+    })();
+  </script>
   <link rel="icon" href="PE.png" type="image/png" />
   <link rel="stylesheet" href="styles.css" />
 </head>
@@ -16,15 +26,19 @@
         <img class="brand-mark" src="PE.png" alt="" />
         <span class="brand-name">Práctica Emprendedora</span>
       </a>
-      <div class="download-nav-actions"><a class="account-top-link" href="cuenta.html" data-auth-account-label>Ingresar</a><a class="account-top-cta" href="cuenta.html?mode=signup&next=admin-download">Crear cuenta</a><a class="back-link" href="index.html"><span aria-hidden="true">←</span>Inicio</a></div>
+      <div class="download-nav-actions"><button class="theme-toggle" type="button" data-theme-toggle aria-label="Cambiar a tema oscuro" title="Cambiar tema">
+          <svg class="theme-icon theme-icon-sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.93 4.93l1.42 1.42M17.65 17.65l1.42 1.42M2 12h2M20 12h2M4.93 19.07l1.42-1.42M17.65 6.35l1.42-1.42"></path></svg>
+          <svg class="theme-icon theme-icon-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20.2 15.2A8.5 8.5 0 0 1 8.8 3.8 8.7 8.7 0 1 0 20.2 15.2Z"></path></svg>
+          <span class="theme-toggle-label">Oscuro</span>
+        </button><a class="account-top-cta" href="cuenta.html" data-auth-account-label data-auth-guest-only>Ingresar</a><a class="back-link" href="index.html"><span aria-hidden="true">←</span>Inicio</a></div>
     </div>
   </header>
 
   <main class="downloads-main">
     <section class="downloads-hero">
       <div class="container downloads-heading">
-        <div class="eyebrow"><span class="pulse-dot"></span>Elegí tu edición</div>
-        <h1>Descargá Práctica Emprendedora.</h1>
+        <div class="eyebrow"><span class="pulse-dot"></span>Ediciones disponibles</div>
+        <h1>Elegí la edición que necesitás.</h1>
         <p>Tres versiones pensadas para necesidades distintas. Demo y Cliente son de descarga directa. Para PE Admin necesitás una cuenta gratuita; la licencia, si corresponde, se asigna luego a tu email.</p>
       </div>
     </section>
@@ -33,8 +47,8 @@
       <div class="container">
         <div class="admin-download-gate reveal">
           <div class="gate-icon">@</div>
-          <div class="gate-copy"><span>PE ADMIN · DESCARGA CON CUENTA</span><strong>Registrate una vez y descargá PE Admin desde tu cuenta.</strong><p>No hace falta tener licencia para registrarse. Cuando te otorguemos una, queda asociada directamente a tu email.</p></div>
-          <a class="gate-cta" href="cuenta.html?mode=signup&next=admin-download">Crear cuenta gratis →</a>
+          <div class="gate-copy"><span>PE ADMIN · DESCARGA CON CUENTA</span><strong>Ingresá para descargar PE Admin desde tu cuenta.</strong><p>Si todavía no tenés una cuenta, vas a poder crearla desde la misma pantalla de acceso. La licencia se asigna directamente a tu email.</p></div>
+          <a class="gate-cta" href="cuenta.html?next=admin-download">Ingresar →</a>
         </div>
 
         <div class="plans-grid">
@@ -68,7 +82,7 @@
             </div>
             <div class="plan-divider"></div>
             <ul class="plan-features"><li><span>✓</span> Creación y control de partidas</li><li><span>✓</span> Administración de empresas</li><li><span>✓</span> Herramientas para docentes</li><li><span>✓</span> Descarga sólo con cuenta registrada</li><li><span>✓</span> Licencia vinculada al email</li></ul>
-            <div class="plan-bottom"><span class="plan-price">PE Admin</span><button class="plan-btn plan-btn-orange" type="button" data-admin-download data-guest-label="Crear cuenta para descargar" data-logged-label="Descargar Admin">Crear cuenta para descargar</button></div>
+            <div class="plan-bottom"><span class="plan-price">PE Admin</span><button class="plan-btn plan-btn-orange" type="button" data-admin-download data-guest-label="Ingresar para descargar" data-logged-label="Descargar Admin">Ingresar para descargar</button></div>
           </article>
         </div>
 

@@ -27,6 +27,25 @@
   let recoverySessionReady = false;
   let recoveryEmail = sessionStorage.getItem("pe_recovery_email") || "";
 
+  function setAuthMode(mode = "login", { updateUrl = false } = {}) {
+    const next = mode === "signup" ? "signup" : "login";
+    document.documentElement.dataset.authMode = next;
+    if (updateUrl) {
+      const url = new URL(location.href);
+      if (next === "signup") url.searchParams.set("mode", "signup");
+      else url.searchParams.delete("mode");
+      history.replaceState({}, "", `${url.pathname}${url.search}${url.hash}`);
+    }
+    setTimeout(() => {
+      const target = next === "signup" ? $("signupEmail") : $("loginEmail");
+      target?.focus();
+    }, 30);
+  }
+
+  document.querySelectorAll("[data-auth-switch]").forEach(button => {
+    button.addEventListener("click", () => setAuthMode(button.dataset.authSwitch, { updateUrl: true }));
+  });
+
   const publicKey = cfg.publishableKey || cfg.anonKey;
   if (!window.supabase || !cfg.url || !publicKey || cfg.url.includes("TU-PROYECTO")) {
     $("authMessage").textContent = "Falta configurar Supabase en supabase-config.js.";
@@ -74,12 +93,13 @@
     resetPasswordArea?.classList.add("hidden");
   }
 
-  function showAuthChoice() {
+  function showAuthChoice(mode = "login") {
     recoveryActive = false;
     recoverySessionReady = false;
     hideRecoveryAreas();
     accountPanel.classList.add("hidden");
     authArea.classList.remove("hidden");
+    setAuthMode(mode);
     const email = $("forgotEmail")?.value?.trim();
     if (email && !$("loginEmail").value) $("loginEmail").value = email;
   }
@@ -297,7 +317,6 @@
     $("adminSelectedLicenseState").textContent = lic ? statusLabel(lic.status) : "Sin licencia";
     $("adminSelectedLicenseState").className = `admin-state-chip ${lic?.status === "active" ? "good" : lic ? "warn" : "none"}`;
     $("adminCustomer").value = lic?.customer || user.display_name || "";
-    $("adminPlan").value = lic?.plan || "PE Admin";
     $("adminStatus").value = lic?.status || "active";
     $("adminMaxDevices").value = lic?.max_devices || 1;
     $("adminExpiry").value = lic?.expires_at ? new Date(lic.expires_at).toISOString().slice(0, 16) : "";
@@ -340,7 +359,7 @@
       hideRecoveryAreas();
       authArea.classList.remove("hidden");
       accountPanel.classList.add("hidden");
-      if (requestedMode === "signup") setTimeout(() => $("registerCard")?.scrollIntoView({ behavior: "smooth", block: "center" }), 120);
+      setAuthMode(requestedMode === "signup" ? "signup" : "login");
       if (params.get("reset") === "success") {
         $("authMessage").classList.add("success");
         $("authMessage").textContent = "Contraseña actualizada. Iniciá sesión con tu nueva contraseña.";
@@ -386,7 +405,6 @@
     devicesTabButton?.classList.remove("hidden");
     switchTab("license");
     $("licenseCustomer").textContent = license.customer;
-    $("licensePlan").textContent = license.plan;
     $("licenseExpiry").textContent = fmtDate(license.expires_at);
     $("licenseStatusMetric").textContent = statusLabel(license.status);
     $("licenseBadge").textContent = statusLabel(license.status).toUpperCase();
@@ -426,7 +444,7 @@
   });
 
   $("forgotPasswordButton").addEventListener("click", showForgotPassword);
-  $("backToLoginButton").addEventListener("click", showAuthChoice);
+  $("backToLoginButton").addEventListener("click", () => showAuthChoice("login"));
   $("changeRecoveryEmailButton")?.addEventListener("click", () => {
     if ($("forgotEmail") && recoveryEmail) $("forgotEmail").value = recoveryEmail;
     showForgotPassword();
@@ -577,7 +595,7 @@
     const payload = {
       user_id: selectedAdminUserId,
       customer: $("adminCustomer").value.trim() || "Licencia Práctica Emprendedora",
-      plan: $("adminPlan").value.trim() || "PE Admin",
+      plan: "PE Admin",
       status: $("adminStatus").value,
       max_devices: Number($("adminMaxDevices").value || 1),
       expires_at: $("adminExpiry").value ? new Date($("adminExpiry").value).toISOString() : null,

@@ -1,3 +1,43 @@
+// -----------------------------------------------------------------------------
+// Tema claro / oscuro
+// El tema claro es el predeterminado para mantener la estética institucional.
+// La preferencia queda guardada para todas las páginas del sitio.
+// -----------------------------------------------------------------------------
+const PE_THEME_KEY = "pe-theme";
+
+function applyPETheme(theme, persist = true) {
+  const next = theme === "dark" ? "dark" : "light";
+  document.documentElement.dataset.theme = next;
+  if (persist) {
+    try { localStorage.setItem(PE_THEME_KEY, next); } catch (_) {}
+  }
+
+  document.querySelectorAll("[data-theme-toggle]").forEach((button) => {
+    const dark = next === "dark";
+    button.classList.toggle("is-dark", dark);
+    button.setAttribute("aria-label", dark ? "Cambiar a tema claro" : "Cambiar a tema oscuro");
+    button.setAttribute("title", dark ? "Tema claro" : "Tema oscuro");
+    const label = button.querySelector(".theme-toggle-label");
+    if (label) label.textContent = dark ? "Claro" : "Oscuro";
+  });
+
+  const themeMeta = document.querySelector('meta[name="theme-color"]');
+  if (themeMeta) themeMeta.setAttribute("content", next === "dark" ? "#0b1422" : "#ffffff");
+}
+
+let initialPETheme = "light";
+try {
+  initialPETheme = localStorage.getItem(PE_THEME_KEY) === "dark" ? "dark" : "light";
+} catch (_) {}
+applyPETheme(initialPETheme, false);
+
+document.querySelectorAll("[data-theme-toggle]").forEach((button) => {
+  button.addEventListener("click", () => {
+    const current = document.documentElement.dataset.theme === "dark" ? "dark" : "light";
+    applyPETheme(current === "dark" ? "light" : "dark");
+  });
+});
+
 const header = document.querySelector(".site-header");
 const menuBtn = document.querySelector(".menu-btn");
 const navLinks = document.querySelector(".nav-links");
@@ -86,7 +126,8 @@ document.querySelectorAll("[data-copy]").forEach((button) => {
   });
 });
 
-document.getElementById("year").textContent = new Date().getFullYear();
+const yearEl = document.getElementById("year");
+if (yearEl) yearEl.textContent = new Date().getFullYear();
 
 
 // Modal de PE Orange Admin
@@ -136,24 +177,24 @@ document.addEventListener("keydown", (event) => {
     }
     .pe-report-preview {
       min-width: 0; overflow: hidden; border: 1px solid var(--line, rgba(255,255,255,.09));
-      border-radius: 22px; background: linear-gradient(145deg, rgba(18,31,51,.97), rgba(9,18,31,.97));
-      box-shadow: 0 30px 75px rgba(0,0,0,.22);
+      border-radius: 6px; background: #ffffff;
+      box-shadow: none;
     }
     .pe-report-windowbar {
       min-height: 54px; padding: 0 17px; display: flex; align-items: center;
       justify-content: space-between; gap: 12px; border-bottom: 1px solid rgba(255,255,255,.07);
-      background: rgba(255,255,255,.025);
+      background: #f8fafc;
     }
     .pe-report-windowbar-left { display: flex; align-items: center; gap: 10px; min-width: 0; }
     .pe-report-dots { display: flex; gap: 5px; flex: 0 0 auto; }
     .pe-report-dots i { width: 7px; height: 7px; border-radius: 50%; background: rgba(255,255,255,.18); }
     .pe-report-windowbar strong {
-      overflow: hidden; color: #dce6ee; font-size: 12px; font-weight: 800;
+      overflow: hidden; color: #24324a; font-size: 12px; font-weight: 800;
       text-overflow: ellipsis; white-space: nowrap;
     }
     .pe-report-kind {
       flex: 0 0 auto; padding: 6px 9px; border: 1px solid rgba(89,230,173,.18);
-      border-radius: 999px; color: #59e6ad; background: rgba(89,230,173,.06);
+      border-radius: 4px; color: #2563eb; background: #eff6ff;
       font-size: 9px; font-weight: 850; letter-spacing: .08em; text-transform: uppercase;
     }
 
@@ -198,11 +239,11 @@ document.addEventListener("keydown", (event) => {
 
     .pe-report-caption {
       display: flex; align-items: flex-start; gap: 11px; padding: 17px 20px 20px;
-      border-top: 1px solid rgba(255,255,255,.07); background: rgba(255,255,255,.02);
+      border-top: 1px solid rgba(255,255,255,.07); background: #ffffff;
     }
     .pe-report-caption-icon {
       width: 32px; height: 32px; flex: 0 0 auto; display: grid; place-items: center;
-      border-radius: 10px; color: #8cc8ff; background: rgba(107,183,255,.10);
+      border-radius: 4px; color: #2563eb; background: #eff6ff;
       font-size: 14px; font-weight: 900;
     }
     .pe-report-caption strong { display: block; margin-bottom: 3px; color: var(--text,#f5f8fb); font-size: 13px; }

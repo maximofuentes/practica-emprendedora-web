@@ -4,8 +4,18 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="description" content="Práctica Emprendedora: simulador empresarial educativo para aprender tomando decisiones." />
-  <meta name="theme-color" content="#0b1020" />
+  <meta name="theme-color" content="#ffffff" />
   <title>Práctica Emprendedora | Simulación empresarial educativa</title>
+  <script>
+    (() => {
+      try {
+        const saved = localStorage.getItem("pe-theme");
+        document.documentElement.dataset.theme = saved === "dark" ? "dark" : "light";
+      } catch (_) {
+        document.documentElement.dataset.theme = "light";
+      }
+    })();
+  </script>
   <link rel="icon" href="PE.png" type="image/png" />
   <link rel="stylesheet" href="styles.css" />
 </head>
@@ -28,8 +38,12 @@
         <a href="#experiencia">Experiencia</a>
         <a href="#colegios">Para colegios</a>
         <a href="descargas.html">Descargas</a>
-        <a href="cuenta.html" data-auth-account-label>Ingresar</a>
-        <a class="nav-cta nav-cta-account" href="cuenta.html?mode=signup&next=admin-download">Crear cuenta</a>
+        <button class="theme-toggle" type="button" data-theme-toggle aria-label="Cambiar a tema oscuro" title="Cambiar tema">
+          <svg class="theme-icon theme-icon-sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.93 4.93l1.42 1.42M17.65 17.65l1.42 1.42M2 12h2M20 12h2M4.93 19.07l1.42-1.42M17.65 6.35l1.42-1.42"></path></svg>
+          <svg class="theme-icon theme-icon-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20.2 15.2A8.5 8.5 0 0 1 8.8 3.8 8.7 8.7 0 1 0 20.2 15.2Z"></path></svg>
+          <span class="theme-toggle-label">Oscuro</span>
+        </button>
+        <a class="nav-cta nav-cta-account" href="cuenta.html" data-auth-account-label data-auth-guest-only>Ingresar</a>
       </nav>
     </div>
   </header>
@@ -40,12 +54,12 @@
         <div class="hero-copy reveal">
           <div class="eyebrow">
             <span class="pulse-dot"></span>
-            Simulación empresarial para el aula
+            Plataforma de simulación empresarial
           </div>
 
           <h1>
             Practica
-            <span class="gradient-text">Emprendedora</span>
+            <span class="brand-blue">Emprendedora</span>
           </h1>
 
           <p class="hero-lead">
@@ -55,14 +69,14 @@
           </p>
 
           <div class="hero-actions">
-            <a class="btn btn-primary" href="cuenta.html?mode=signup&next=admin-download">
-              Crear cuenta gratis
+            <a class="btn btn-primary" href="cuenta.html" data-auth-guest-only>
+              Ingresar
               <span aria-hidden="true">→</span>
             </a>
             <a class="btn btn-secondary" href="descargas.html">Ver descargas</a>
             <a class="btn btn-secondary" href="#como-funciona">Descubrir cómo funciona</a>
           </div>
-          <p class="hero-account-note">PE Admin requiere una cuenta registrada para descargarse. La licencia se asigna después directamente a tu email.</p>
+          <p class="hero-account-note">PE Admin requiere una cuenta registrada. Si todavía no tenés una, podés crearla desde la pantalla de ingreso.</p>
 
           <div class="hero-notes">
             <div><strong>Dinámico</strong><span>Decisiones por rondas</span></div>
@@ -171,7 +185,7 @@
     <section class="section" id="que-es">
       <div class="container">
         <div class="section-heading centered reveal">
-          <div class="eyebrow">Una experiencia, no una clase teórica</div>
+          <div class="eyebrow">Aprendizaje basado en decisiones</div>
           <h2>Las decisiones dejan de ser conceptos y se convierten en resultados.</h2>
           <p>
             Cada grupo administra su propia empresa. Todos participan del mismo
@@ -228,7 +242,7 @@
         <div class="timeline">
           <article class="timeline-card reveal">
             <span class="timeline-number">1</span>
-            <div class="timeline-icon">👨‍🏫</div>
+            <div class="timeline-icon">01</div>
             <h3>El docente crea la partida</h3>
             <p>Configura el escenario, las empresas, los límites y las rondas.</p>
           </article>
@@ -237,7 +251,7 @@
 
           <article class="timeline-card reveal delay-1">
             <span class="timeline-number">2</span>
-            <div class="timeline-icon">💻</div>
+            <div class="timeline-icon">02</div>
             <h3>Los equipos deciden</h3>
             <p>Cada empresa define su estrategia de forma independiente.</p>
           </article>
@@ -246,7 +260,7 @@
 
           <article class="timeline-card reveal delay-2">
             <span class="timeline-number">3</span>
-            <div class="timeline-icon">📊</div>
+            <div class="timeline-icon">03</div>
             <h3>El mercado responde</h3>
             <p>La simulación calcula resultados, demanda, utilidad y participación.</p>
           </article>
@@ -255,7 +269,7 @@
 
           <article class="timeline-card reveal delay-3">
             <span class="timeline-number">4</span>
-            <div class="timeline-icon">🧠</div>
+            <div class="timeline-icon">04</div>
             <h3>Se aprende del resultado</h3>
             <p>Los equipos analizan, ajustan su estrategia y vuelven a competir.</p>
           </article>
@@ -266,7 +280,7 @@
     <section class="section" id="experiencia">
       <div class="container experience-grid">
         <div class="experience-copy reveal">
-          <div class="eyebrow">Pensado para mantener a todos involucrados</div>
+          <div class="eyebrow">Información clara para decidir mejor</div>
           <h2>La teoría aparece cuando realmente hace falta.</h2>
           <p>
             En vez de memorizar qué significa una decisión empresarial, el

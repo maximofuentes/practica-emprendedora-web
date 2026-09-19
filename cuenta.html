@@ -3,9 +3,21 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="theme-color" content="#080b14" />
+  <meta name="theme-color" content="#ffffff" />
   <meta name="description" content="Creá tu cuenta de Práctica Emprendedora, descargá PE Admin y administrá tu licencia." />
   <title>Cuenta | Práctica Emprendedora</title>
+  <script>
+    (() => {
+      try {
+        const saved = localStorage.getItem("pe-theme");
+        document.documentElement.dataset.theme = saved === "dark" ? "dark" : "light";
+      } catch (_) {
+        document.documentElement.dataset.theme = "light";
+      }
+      const authMode = new URLSearchParams(location.search).get("mode");
+      document.documentElement.dataset.authMode = authMode === "signup" ? "signup" : "login";
+    })();
+  </script>
   <link rel="icon" href="PE.png" type="image/png" />
   <link rel="stylesheet" href="styles.css" />
 </head>
@@ -13,41 +25,29 @@
   <header class="site-header scrolled">
     <div class="container nav-wrap">
       <a class="brand" href="index.html"><img class="brand-mark" src="PE.png" alt="" /><span class="brand-name">Práctica Emprendedora</span></a>
-      <div class="download-nav-actions"><a class="back-link" href="descargas.html">Descargas</a><a class="back-link" href="index.html">← Inicio</a></div>
+      <div class="download-nav-actions"><button class="theme-toggle" type="button" data-theme-toggle aria-label="Cambiar a tema oscuro" title="Cambiar tema">
+          <svg class="theme-icon theme-icon-sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.93 4.93l1.42 1.42M17.65 17.65l1.42 1.42M2 12h2M20 12h2M4.93 19.07l1.42-1.42M17.65 6.35l1.42-1.42"></path></svg>
+          <svg class="theme-icon theme-icon-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20.2 15.2A8.5 8.5 0 0 1 8.8 3.8 8.7 8.7 0 1 0 20.2 15.2Z"></path></svg>
+          <span class="theme-toggle-label">Oscuro</span>
+        </button><a class="back-link" href="index.html">← Inicio</a></div>
     </div>
   </header>
 
   <main class="account-main">
     <section class="container account-shell">
-      <div class="account-intro">
-        <div class="eyebrow"><span class="pulse-dot"></span>Cuenta Práctica Emprendedora</div>
-        <h1>Registrate, descargá y gestioná tu acceso.</h1>
-        <p>La cuenta es gratuita y obligatoria para descargar PE Admin. Después, una licencia puede asignarse directamente a tu email desde el panel administrativo.</p>
+      <div class="account-intro account-auth-intro">
+        <div class="eyebrow"><span class="pulse-dot"></span>Práctica Emprendedora</div>
+        <h1>Accedé a tu cuenta.</h1>
+        <p>Ingresá para administrar tu licencia y acceder a PE Admin.</p>
       </div>
 
-      <section id="authArea" class="auth-choice-grid">
-        <article id="registerCard" class="account-card auth-card auth-card-featured">
-          <div class="auth-card-badge">PASO 1 · CREÁ TU CUENTA</div>
-          <div class="account-card-head"><div><small>Registro gratuito</small><h2>Crear cuenta</h2></div><img src="PE_ORANGE.png" alt="" /></div>
-          <p class="auth-card-copy">Usá el email al que querés que se asocie tu futura licencia. No necesitás una licencia para registrarte ni para descargar el instalador.</p>
-          <form id="signupForm" class="account-form" autocomplete="on">
-            <label>Nombre o institución <input id="signupName" name="organization" type="text" autocomplete="organization" maxlength="120" placeholder="Colegio / docente / institución" /></label>
-            <label>Email <input id="signupEmail" name="email" type="email" autocomplete="email" inputmode="email" autocapitalize="none" spellcheck="false" required placeholder="colegio@ejemplo.com" /></label>
-            <label>Contraseña
-              <span class="password-field"><input id="signupPassword" name="new-password" type="password" autocomplete="new-password" minlength="10" required placeholder="Mínimo 10 caracteres" /><button class="password-toggle" type="button" data-password-toggle="signupPassword" aria-label="Mostrar contraseña" aria-pressed="false">👁</button></span>
-            </label>
-            <label>Repetir contraseña
-              <span class="password-field"><input id="signupPassword2" name="confirm-password" type="password" autocomplete="new-password" minlength="10" required placeholder="Repetí tu contraseña" /><button class="password-toggle" type="button" data-password-toggle="signupPassword2" aria-label="Mostrar contraseña" aria-pressed="false">👁</button></span>
-            </label>
-            <button class="account-primary-btn account-primary-btn-orange" type="submit">Crear mi cuenta</button>
-            <p class="auth-legal">Al registrarte, tu cuenta queda disponible para que una licencia pueda asignarse a ese email.</p>
-            <p id="signupMessage" class="form-message" aria-live="polite"></p>
-          </form>
-        </article>
-
-        <article id="authCard" class="account-card auth-card">
-          <div class="account-card-head"><div><small>Ya tengo cuenta</small><h2>Iniciar sesión</h2></div><img src="PE.png" alt="" /></div>
-          <p class="auth-card-copy">Entrá para ver tu licencia, administrar dispositivos o descargar PE Admin con tu cuenta.</p>
+      <section id="authArea" class="auth-choice-grid auth-single-shell">
+        <article id="authCard" class="account-card auth-card auth-login-card">
+          <div class="account-card-head">
+            <div><small>Acceso a tu cuenta</small><h2>Iniciar sesión</h2></div>
+            <img src="PE.png" alt="" />
+          </div>
+          <p class="auth-card-copy">Usá el email y la contraseña de tu cuenta de Práctica Emprendedora.</p>
           <form id="loginForm" class="account-form" autocomplete="on">
             <label>Email<input id="loginEmail" name="email" type="email" autocomplete="email" inputmode="email" autocapitalize="none" spellcheck="false" required placeholder="colegio@ejemplo.com" /></label>
             <label>Contraseña
@@ -57,6 +57,29 @@
             <button id="forgotPasswordButton" class="account-link-btn" type="button">¿Olvidaste tu contraseña?</button>
             <p id="authMessage" class="form-message" aria-live="polite"></p>
           </form>
+          <div class="auth-switch-line">¿No tenés una cuenta? <button type="button" data-auth-switch="signup">Creá una</button></div>
+        </article>
+
+        <article id="registerCard" class="account-card auth-card auth-register-card">
+          <div class="account-card-head">
+            <div><small>Registro gratuito</small><h2>Crear cuenta</h2></div>
+            <img src="PE.png" alt="" />
+          </div>
+          <p class="auth-card-copy">Creá tu cuenta con el email al que querés vincular tu futura licencia.</p>
+          <form id="signupForm" class="account-form" autocomplete="on">
+            <label>Nombre o institución <input id="signupName" name="organization" type="text" autocomplete="organization" maxlength="120" placeholder="Colegio / docente / institución" /></label>
+            <label>Email <input id="signupEmail" name="email" type="email" autocomplete="email" inputmode="email" autocapitalize="none" spellcheck="false" required placeholder="colegio@ejemplo.com" /></label>
+            <label>Contraseña
+              <span class="password-field"><input id="signupPassword" name="new-password" type="password" autocomplete="new-password" minlength="10" required placeholder="Mínimo 10 caracteres" /><button class="password-toggle" type="button" data-password-toggle="signupPassword" aria-label="Mostrar contraseña" aria-pressed="false">👁</button></span>
+            </label>
+            <label>Repetir contraseña
+              <span class="password-field"><input id="signupPassword2" name="confirm-password" type="password" autocomplete="new-password" minlength="10" required placeholder="Repetí tu contraseña" /><button class="password-toggle" type="button" data-password-toggle="signupPassword2" aria-label="Mostrar contraseña" aria-pressed="false">👁</button></span>
+            </label>
+            <button class="account-primary-btn" type="submit">Crear cuenta</button>
+            <p class="auth-legal">Tu cuenta puede recibir una licencia asociada a este email.</p>
+            <p id="signupMessage" class="form-message" aria-live="polite"></p>
+          </form>
+          <div class="auth-switch-line">¿Ya tenés una cuenta? <button type="button" data-auth-switch="login">Ingresá</button></div>
         </article>
       </section>
 
@@ -148,7 +171,7 @@
 
           <div id="tab-license" class="account-tab-panel active">
             <section class="license-hero-card">
-              <div class="license-title-row"><div><span id="licenseBadge" class="license-state">ACTIVA</span><h2 id="licenseCustomer">Licencia</h2><p id="licensePlan">PE Admin</p></div><img src="PE_ORANGE.png" alt="" /></div>
+              <div class="license-title-row"><div><span id="licenseBadge" class="license-state">ACTIVA</span><h2 id="licenseCustomer">Licencia</h2></div><img src="PE_ORANGE.png" alt="" /></div>
               <div class="license-metrics">
                 <div><span>Vencimiento</span><strong id="licenseExpiry">—</strong></div>
                 <div><span>Dispositivos</span><strong id="licenseDevicesMetric">—</strong></div>
@@ -195,7 +218,6 @@
                     <div class="admin-editor-section-title"><span>01</span><div><strong>Datos de la licencia</strong><small>La licencia queda vinculada al email seleccionado.</small></div></div>
                     <div class="admin-grid admin-grid-polished">
                       <label>Cliente / institución<input id="adminCustomer" type="text" placeholder="Ej. Colegio San Martín" /></label>
-                      <label>Plan<input id="adminPlan" type="text" value="PE Admin" /></label>
                       <label>Estado<select id="adminStatus"><option value="active">Activa</option><option value="paused">Pausada</option><option value="revoked">Revocada</option></select></label>
                       <label>Máx. dispositivos<input id="adminMaxDevices" type="number" min="1" max="50" value="1" /></label>
                       <label class="admin-field-wide">Vencimiento<input id="adminExpiry" type="datetime-local" /></label>
