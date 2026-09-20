@@ -4187,3 +4187,22 @@ html[data-theme="dark"] .pe-real-window {
     padding-bottom: 62px;
   }
 }
+
+/* =========================================================
+   Ajuste de separación inferior · pantalla de inicio de sesión
+   ========================================================= */
+.account-page .auth-single-shell {
+  margin-bottom: 96px;
+}
+
+@media (max-width: 780px) {
+  .account-page .auth-single-shell {
+    margin-bottom: 84px;
+  }
+}
+
+@media (max-width: 560px) {
+  .account-page .auth-single-shell {
+    margin-bottom: 72px;
+  }
+}
