@@ -3164,3 +3164,1026 @@ body:has(#accountPanel:not(.hidden)) .account-auth-intro {
     margin-bottom: 18px;
   }
 }
+
+/* ======================================================================
+   PE UI v7 · correcciones mobile
+   - El mockup del hero entra completo en pantallas chicas.
+   - Espaciado vertical consistente en cuenta, licencias y descargas.
+   ====================================================================== */
+
+@media (max-width: 780px) {
+  /* Ritmo general: evita secciones pegadas entre sí en mobile. */
+  .section {
+    padding-top: 68px;
+    padding-bottom: 68px;
+  }
+
+  .hero {
+    min-height: auto;
+    padding-top: 108px;
+    padding-bottom: 64px;
+  }
+
+  .hero-grid {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 44px;
+  }
+
+  .hero-copy,
+  .hero-visual,
+  .app-window,
+  .app-body,
+  .mock-content {
+    min-width: 0;
+    max-width: 100%;
+  }
+
+  .hero-copy {
+    width: 100%;
+  }
+
+  .hero-actions {
+    margin-top: 26px;
+    margin-bottom: 26px;
+  }
+
+  .hero-account-note {
+    margin-top: -10px;
+    margin-bottom: 26px;
+  }
+
+  .hero-notes {
+    margin-top: 0;
+    padding-top: 22px;
+    gap: 16px;
+  }
+
+  /* Mockup principal: sin desborde horizontal ni recortes. */
+  .hero-visual {
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    overflow: visible;
+  }
+
+  .app-window {
+    width: 100%;
+    max-width: 100%;
+    overflow: hidden;
+    transform: none !important;
+  }
+
+  .window-top {
+    min-width: 0;
+    height: 44px;
+    padding: 0 11px;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 8px;
+  }
+
+  .window-top > span {
+    display: none;
+  }
+
+  .window-dots {
+    min-width: 0;
+  }
+
+  .status-online {
+    max-width: 100%;
+    padding: 4px 7px;
+    white-space: nowrap;
+    font-size: 9px;
+  }
+
+  .app-body {
+    grid-template-columns: 46px minmax(0, 1fr);
+    min-height: 0;
+  }
+
+  .mock-sidebar {
+    width: 46px;
+    padding-top: 15px;
+    gap: 12px;
+  }
+
+  .mini-brand {
+    width: 26px;
+    height: 26px;
+  }
+
+  .side-item {
+    width: 22px;
+    height: 22px;
+  }
+
+  .mock-content {
+    width: 100%;
+    padding: 16px;
+    overflow: hidden;
+  }
+
+  .mock-title-row {
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .mock-title-row > div {
+    min-width: 0;
+  }
+
+  .mock-title-row h3 {
+    max-width: 100%;
+    font-size: 17px;
+    line-height: 1.15;
+    overflow-wrap: anywhere;
+  }
+
+  .round-pill {
+    flex: 0 0 auto;
+    padding: 6px 8px;
+    font-size: 8px;
+  }
+
+  .kpi-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 8px;
+    margin: 16px 0 10px;
+  }
+
+  .kpi-grid .kpi:nth-child(3) {
+    grid-column: 1 / -1;
+  }
+
+  .kpi {
+    min-width: 0;
+    padding: 11px;
+  }
+
+  .kpi span,
+  .kpi em {
+    overflow-wrap: anywhere;
+  }
+
+  .kpi strong {
+    font-size: 15px;
+  }
+
+  .chart-card {
+    min-width: 0;
+    padding: 12px;
+  }
+
+  .chart-head {
+    min-width: 0;
+  }
+
+  .chart-head > div {
+    min-width: 0;
+  }
+
+  .chart-head strong {
+    font-size: 16px;
+  }
+
+  .bars {
+    height: 74px;
+    margin-top: 14px;
+    gap: 6px;
+  }
+
+  .decision-row {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 8px;
+    margin-top: 10px;
+  }
+
+  .decision-row div {
+    min-width: 0;
+    padding: 9px 10px;
+  }
+
+  .decision-row button {
+    grid-column: 1 / -1;
+    width: 100%;
+    min-height: 40px;
+  }
+
+  /* Cuenta / login: más separación inferior y laterales seguros. */
+  .account-main {
+    padding-top: 102px;
+    padding-bottom: 60px;
+  }
+
+  .account-shell {
+    width: min(calc(100% - 28px), 1160px);
+  }
+
+  .account-auth-intro {
+    margin-bottom: 28px;
+  }
+
+  .auth-single-shell,
+  .password-recovery-shell {
+    margin-bottom: 64px;
+  }
+
+  .account-panel {
+    margin-top: 24px;
+    margin-bottom: 64px;
+  }
+
+  #licenseTabs {
+    margin-top: 22px;
+    padding-bottom: 14px;
+  }
+
+  #licenseTabs .account-tabs {
+    margin-bottom: 22px;
+    padding-bottom: 2px;
+  }
+
+  #licenseTabs .account-tab-panel.active {
+    margin-bottom: 28px;
+  }
+
+  .license-hero-card,
+  #tab-devices .account-card {
+    margin-bottom: 18px;
+  }
+
+  .admin-dashboard-head {
+    margin-bottom: 18px;
+  }
+
+  .admin-stats-grid {
+    margin-bottom: 18px;
+  }
+
+  .admin-license-workspace {
+    margin-bottom: 24px;
+  }
+
+  .admin-user-browser {
+    padding-bottom: 20px;
+  }
+
+  .admin-license-editor {
+    padding-top: 20px;
+    padding-bottom: 24px;
+  }
+
+  /* Descargas: cards y nota con separación constante. */
+  .downloads-main {
+    padding-top: 68px;
+  }
+
+  .downloads-hero {
+    padding-top: 70px;
+    padding-bottom: 42px;
+  }
+
+  .downloads-section {
+    padding-top: 30px;
+    padding-bottom: 70px;
+  }
+
+  .admin-download-gate {
+    margin-bottom: 28px;
+  }
+
+  .plans-grid {
+    gap: 18px;
+  }
+
+  .download-plan {
+    margin: 0;
+  }
+
+  .download-note {
+    margin-top: 28px;
+    margin-bottom: 12px;
+  }
+
+  /* Header compacto sin apretar logo/acciones. */
+  .download-nav-actions {
+    gap: 8px;
+  }
+
+  .download-nav-actions .back-link {
+    white-space: nowrap;
+  }
+}
+
+@media (max-width: 560px) {
+  /* En teléfonos angostos el mockup pasa a una sola columna limpia. */
+  .hero-grid {
+    gap: 36px;
+  }
+
+  .hero {
+    padding-top: 96px;
+    padding-bottom: 56px;
+  }
+
+  .hero-actions {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+
+  .hero-actions .btn {
+    width: 100%;
+  }
+
+  .hero-notes {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .app-body {
+    display: block;
+  }
+
+  .mock-sidebar {
+    display: none;
+  }
+
+  .mock-content {
+    padding: 14px;
+  }
+
+  .mock-title-row {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+  }
+
+  .kpi-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .kpi-grid .kpi:nth-child(3) {
+    grid-column: auto;
+  }
+
+  .decision-row {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .account-main {
+    padding-top: 92px;
+    padding-bottom: 48px;
+  }
+
+  .account-auth-intro {
+    margin-bottom: 24px;
+  }
+
+  .auth-single-shell,
+  .password-recovery-shell {
+    margin-bottom: 56px;
+  }
+
+  .account-card,
+  .license-hero-card {
+    padding: 18px;
+  }
+
+  .account-card-head,
+  .license-title-row {
+    align-items: flex-start;
+  }
+
+  .account-card-head img,
+  .license-title-row img {
+    width: 46px;
+    height: 46px;
+  }
+
+  .account-toolbar {
+    margin-bottom: 20px;
+  }
+
+  #licenseTabs {
+    margin-top: 20px;
+    padding-bottom: 16px;
+  }
+
+  #licenseTabs .account-tabs {
+    margin-bottom: 20px;
+  }
+
+  .admin-stats-grid {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+
+  .admin-grid-polished {
+    grid-template-columns: 1fr;
+  }
+
+  .admin-field-wide {
+    grid-column: auto;
+  }
+
+  .downloads-hero {
+    padding-top: 58px;
+    padding-bottom: 34px;
+  }
+
+  .downloads-section {
+    padding-top: 24px;
+    padding-bottom: 56px;
+  }
+
+  .admin-download-gate {
+    margin-bottom: 24px;
+  }
+
+  .plans-grid {
+    gap: 16px;
+  }
+
+  .download-note {
+    margin-top: 24px;
+  }
+}
+
+@media (max-width: 420px) {
+  .brand-name {
+    display: none;
+  }
+
+  .hero {
+    padding-top: 88px;
+  }
+
+  .mock-title-row h3 {
+    font-size: 15px;
+  }
+
+  .window-top {
+    padding-inline: 9px;
+  }
+
+  .status-online {
+    font-size: 8px;
+  }
+
+  .decision-row {
+    grid-template-columns: 1fr;
+  }
+
+  .decision-row button {
+    grid-column: auto;
+  }
+
+  .account-shell,
+  .downloads-page .container {
+    width: min(calc(100% - 22px), var(--container));
+  }
+
+  .download-nav-actions .back-link {
+    font-size: 11px;
+  }
+
+  .theme-toggle {
+    min-width: 38px;
+  }
+}
+
+
+/* ======================================================================
+   PE UI v8 · mockup fiel al programa real
+   Reproduce la pantalla "Control de rondas" del Admin usando la paleta
+   real de tema_moderno.py, pero adaptada al tamaño de la landing.
+   ====================================================================== */
+.pe-real-window {
+  width: 100%;
+  min-width: 0;
+  overflow: hidden;
+  border: 1px solid #26354d;
+  border-radius: 8px;
+  background: #0b1220;
+  box-shadow: 0 18px 38px rgba(15, 35, 65, .16);
+  color: #f5f7fb;
+  font-family: "Segoe UI", Inter, system-ui, sans-serif;
+}
+
+.pe-real-titlebar {
+  height: 38px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid #26354d;
+  background: #080d18;
+  color: #c7d0de;
+  font-size: 10px;
+  user-select: none;
+}
+
+.pe-real-title {
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding-left: 11px;
+}
+
+.pe-real-title img {
+  width: 20px;
+  height: 20px;
+  flex: 0 0 20px;
+  border-radius: 3px;
+  object-fit: cover;
+}
+
+.pe-real-title span {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.pe-real-window-controls {
+  align-self: stretch;
+  display: grid;
+  grid-template-columns: repeat(3, 34px);
+}
+
+.pe-real-window-controls span {
+  display: grid;
+  place-items: center;
+  color: #8c98aa;
+  font-size: 11px;
+}
+
+.pe-real-window-controls span:last-child {
+  color: #c7d0de;
+}
+
+.pe-real-content {
+  min-width: 0;
+  padding: 24px 26px 26px;
+  background: #0b1220;
+}
+
+.pe-real-heading {
+  min-width: 0;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 20px;
+  margin-bottom: 18px;
+}
+
+.pe-real-heading > div:first-child { min-width: 0; }
+
+.pe-real-kicker {
+  display: block;
+  margin-bottom: 5px;
+  color: #3b82f6;
+  font-size: 8px;
+  font-weight: 800;
+  letter-spacing: .11em;
+}
+
+.pe-real-heading h3 {
+  margin: 0;
+  color: #f5f7fb;
+  font-size: 23px;
+  line-height: 1.05;
+  letter-spacing: -.025em;
+  font-weight: 700;
+}
+
+.pe-real-heading p {
+  margin: 5px 0 0;
+  color: #8492a6;
+  font-size: 10px;
+  line-height: 1.45;
+}
+
+.pe-real-status {
+  flex: 0 0 auto;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 8px;
+  border: 1px solid rgba(34, 197, 94, .24);
+  border-radius: 4px;
+  background: rgba(34, 197, 94, .08);
+  color: #55d881;
+  font-size: 7.5px;
+  font-weight: 800;
+  letter-spacing: .08em;
+}
+
+.pe-real-status i {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: #22c55e;
+}
+
+.pe-real-metrics {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 9px;
+  margin-bottom: 12px;
+}
+
+.pe-real-metrics article {
+  min-width: 0;
+  padding: 13px 14px;
+  border: 1px solid #26354d;
+  border-radius: 6px;
+  background: #111a2b;
+}
+
+.pe-real-metrics strong,
+.pe-real-metrics span {
+  display: block;
+}
+
+.pe-real-metrics strong {
+  margin-bottom: 4px;
+  color: #f5f7fb;
+  font-size: 19px;
+  line-height: 1;
+  font-weight: 700;
+}
+
+.pe-real-metrics span {
+  color: #8492a6;
+  font-size: 8px;
+  line-height: 1.25;
+}
+
+.pe-real-round-card {
+  padding: 17px;
+  border: 1px solid #26354d;
+  border-radius: 7px;
+  background: #111a2b;
+}
+
+.pe-real-round-label {
+  display: block;
+  color: #c7d0de;
+  font-size: 8px;
+  font-weight: 800;
+  letter-spacing: .08em;
+}
+
+.pe-real-round-card > p {
+  margin: 6px 0 12px;
+  color: #8492a6;
+  font-size: 8.5px;
+  line-height: 1.45;
+}
+
+.pe-real-select {
+  min-height: 34px;
+  padding: 0 11px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  border: 1px solid #26354d;
+  border-radius: 5px;
+  background: #172235;
+  color: #f5f7fb;
+  font-size: 9px;
+}
+
+.pe-real-select b {
+  color: #8492a6;
+  font-size: 12px;
+  font-weight: 400;
+}
+
+.pe-real-actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 9px;
+  margin-top: 11px;
+}
+
+.pe-real-btn {
+  min-width: 0;
+  min-height: 35px;
+  padding: 0 10px;
+  border-radius: 5px;
+  border: 1px solid #26354d;
+  font-family: "Segoe UI", Inter, system-ui, sans-serif;
+  font-size: 8.5px;
+  font-weight: 700;
+  cursor: default;
+}
+
+.pe-real-btn.secondary {
+  background: #172235;
+  color: #f5f7fb;
+}
+
+.pe-real-btn.primary {
+  border-color: #3b82f6;
+  background: #3b82f6;
+  color: #fff;
+}
+
+.pe-real-shortcuts {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 9px;
+  margin-top: 11px;
+}
+
+.pe-real-shortcuts > div {
+  min-width: 0;
+  padding: 10px 11px;
+  border: 1px solid #26354d;
+  border-radius: 5px;
+  background: #0f1726;
+}
+
+.pe-real-shortcuts span,
+.pe-real-shortcuts strong {
+  display: block;
+}
+
+.pe-real-shortcuts span {
+  margin-bottom: 3px;
+  color: #c7d0de;
+  font-size: 8px;
+  font-weight: 700;
+}
+
+.pe-real-shortcuts strong {
+  color: #8492a6;
+  font-size: 7px;
+  line-height: 1.35;
+  font-weight: 500;
+}
+
+/* El mockup del programa conserva su tema oscuro incluso si la web está clara. */
+html[data-theme="light"] .pe-real-window,
+html[data-theme="dark"] .pe-real-window {
+  color-scheme: dark;
+}
+
+@media (max-width: 780px) {
+  .pe-real-window {
+    width: 100%;
+    max-width: 100%;
+    border-radius: 7px;
+  }
+
+  .pe-real-content {
+    padding: 18px;
+  }
+
+  .pe-real-window-controls {
+    grid-template-columns: repeat(3, 28px);
+  }
+
+  .pe-real-heading {
+    gap: 10px;
+    margin-bottom: 14px;
+  }
+
+  .pe-real-heading h3 {
+    font-size: 20px;
+  }
+
+  .pe-real-heading p {
+    font-size: 9px;
+  }
+
+  .pe-real-status {
+    padding: 5px 6px;
+    font-size: 6.5px;
+  }
+
+  .pe-real-metrics {
+    gap: 7px;
+  }
+
+  .pe-real-metrics article {
+    padding: 10px;
+  }
+
+  .pe-real-metrics strong {
+    font-size: 16px;
+  }
+
+  .pe-real-metrics span {
+    font-size: 7px;
+  }
+
+  .pe-real-round-card {
+    padding: 13px;
+  }
+
+  .pe-real-shortcuts {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (max-width: 480px) {
+  .pe-real-titlebar {
+    height: 34px;
+  }
+
+  .pe-real-title span {
+    font-size: 8px;
+  }
+
+  .pe-real-title img {
+    width: 18px;
+    height: 18px;
+    flex-basis: 18px;
+  }
+
+  .pe-real-content {
+    padding: 14px;
+  }
+
+  .pe-real-heading {
+    align-items: flex-start;
+  }
+
+  .pe-real-heading h3 {
+    font-size: 18px;
+  }
+
+  .pe-real-heading p {
+    max-width: 210px;
+  }
+
+  .pe-real-status {
+    margin-top: 2px;
+    white-space: nowrap;
+  }
+
+  .pe-real-metrics {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .pe-real-metrics article {
+    padding: 9px 7px;
+  }
+
+  .pe-real-metrics strong {
+    font-size: 15px;
+  }
+
+  .pe-real-metrics span {
+    font-size: 6.4px;
+    overflow-wrap: anywhere;
+  }
+
+  .pe-real-round-card > p {
+    font-size: 8px;
+  }
+
+  .pe-real-actions {
+    grid-template-columns: 1fr;
+    gap: 7px;
+  }
+
+  .pe-real-btn {
+    min-height: 33px;
+  }
+
+  .pe-real-shortcuts {
+    grid-template-columns: 1fr;
+    gap: 7px;
+  }
+}
+
+/* ======================================================================
+   PE UI v9 · mockup real con la paleta visual anterior
+   Mantiene la estructura fiel al Admin, pero vuelve al aspecto claro/azul
+   del mockup anterior y respeta el selector de tema de la web.
+   ====================================================================== */
+.pe-real-window {
+  border-color: var(--line-strong);
+  background: var(--surface);
+  box-shadow: var(--shadow);
+  color: var(--text);
+}
+
+.pe-real-titlebar {
+  border-bottom-color: var(--line);
+  background: var(--surface-soft);
+  color: var(--muted);
+}
+
+.pe-real-window-controls span {
+  color: var(--muted-2);
+}
+
+.pe-real-window-controls span:last-child {
+  color: var(--text);
+}
+
+.pe-real-content {
+  background: var(--surface);
+}
+
+.pe-real-kicker {
+  color: var(--accent);
+}
+
+.pe-real-heading h3,
+.pe-real-metrics strong,
+.pe-real-select {
+  color: var(--heading);
+}
+
+.pe-real-heading p,
+.pe-real-metrics span,
+.pe-real-round-card > p,
+.pe-real-shortcuts strong {
+  color: var(--muted-2);
+}
+
+.pe-real-status {
+  border-color: color-mix(in srgb, var(--success) 28%, var(--line));
+  background: color-mix(in srgb, var(--success) 8%, var(--surface));
+  color: var(--success);
+}
+
+.pe-real-status i {
+  background: var(--success);
+}
+
+.pe-real-metrics article,
+.pe-real-round-card,
+.pe-real-shortcuts > div {
+  border-color: var(--line);
+  background: var(--surface-soft);
+}
+
+.pe-real-round-label,
+.pe-real-shortcuts span {
+  color: var(--text);
+}
+
+.pe-real-select {
+  border-color: var(--line-strong);
+  background: var(--surface);
+}
+
+.pe-real-select b {
+  color: var(--muted-2);
+}
+
+.pe-real-btn {
+  border-color: var(--line-strong);
+}
+
+.pe-real-btn.secondary {
+  background: var(--surface);
+  color: var(--text);
+}
+
+.pe-real-btn.primary {
+  border-color: var(--accent);
+  background: var(--accent);
+  color: #fff;
+}
+
+/* El contenido del programa ya no fuerza un tema oscuro propio. */
+html[data-theme="light"] .pe-real-window,
+html[data-theme="dark"] .pe-real-window {
+  color-scheme: inherit;
+}
+
+/* La portada ocupa como mínimo toda la primera pantalla. Así la barra de
+   Precio / Producción / Marketing recién aparece después de hacer scroll. */
+.hero {
+  min-height: 100svh;
+}
+
+@media (min-width: 1001px) {
+  .hero {
+    padding-top: 132px;
+    padding-bottom: 88px;
+  }
+}
+
+@media (max-width: 1000px) {
+  .hero {
+    min-height: 100svh;
+  }
+}
+
+@media (max-width: 780px) {
+  .hero {
+    min-height: 100svh;
+    padding-bottom: 62px;
+  }
+}
