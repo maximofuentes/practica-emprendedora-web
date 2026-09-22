@@ -4206,3 +4206,125 @@ html[data-theme="dark"] .pe-real-window {
     margin-bottom: 72px;
   }
 }
+
+/* ======================================================================
+   PE UI · navegación mobile: tema visible junto al menú
+   ====================================================================== */
+.header-tools {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-left: 14px;
+  flex: 0 0 auto;
+}
+
+/* La navegación ocupa el espacio central y las herramientas quedan al final. */
+.nav-links {
+  margin-left: auto;
+}
+
+/* El menú hamburguesa tiene que usar el color del tema, no blanco fijo. */
+.menu-btn span {
+  background: var(--text);
+}
+
+html[data-theme="light"] .menu-btn span {
+  background: #203148;
+}
+
+html[data-theme="dark"] .menu-btn span {
+  background: #f4f7fb;
+}
+
+/* Botón de tema compacto en el header. */
+.header-tools .theme-toggle {
+  min-width: 42px;
+  width: 42px;
+  height: 42px;
+  min-height: 42px;
+  padding: 0;
+  border-color: var(--line-strong);
+  background: var(--surface);
+}
+
+.header-tools .theme-toggle:hover {
+  background: var(--surface-soft);
+  border-color: var(--accent-border);
+}
+
+.header-tools .theme-toggle-label {
+  display: none;
+}
+
+@media (max-width: 780px) {
+  .nav-wrap {
+    gap: 10px;
+  }
+
+  .brand {
+    min-width: 0;
+    flex: 1 1 auto;
+  }
+
+  .brand-name {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .header-tools {
+    position: relative;
+    z-index: 5;
+    margin-left: auto;
+    gap: 6px;
+  }
+
+  .header-tools .theme-toggle,
+  .menu-btn {
+    display: grid;
+    place-items: center;
+    width: 42px;
+    height: 42px;
+    min-width: 42px;
+    min-height: 42px;
+    padding: 0;
+  }
+
+  .menu-btn {
+    position: relative;
+    z-index: 5;
+  }
+
+  .menu-btn span {
+    width: 23px;
+    margin: 3px auto;
+  }
+
+  /* Ya no hace falta reservar el selector de tema dentro del menú desplegable. */
+  .nav-links .theme-toggle {
+    display: none !important;
+  }
+
+  .nav-links {
+    margin-left: 0;
+  }
+}
+
+@media (max-width: 390px) {
+  .brand-mark {
+    width: 36px;
+    height: 36px;
+  }
+
+  .brand-name {
+    font-size: 13px;
+  }
+
+  .header-tools .theme-toggle,
+  .menu-btn {
+    width: 40px;
+    height: 40px;
+    min-width: 40px;
+    min-height: 40px;
+  }
+}

@@ -4,15 +4,15 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="description" content="Práctica Emprendedora: simulador empresarial educativo para aprender tomando decisiones." />
-  <meta name="theme-color" content="#ffffff" />
+  <meta name="theme-color" content="#0b1220" />
   <title>Práctica Emprendedora | Simulación empresarial educativa</title>
   <script>
     (() => {
       try {
         const saved = localStorage.getItem("pe-theme");
-        document.documentElement.dataset.theme = saved === "dark" ? "dark" : "light";
+        document.documentElement.dataset.theme = saved === "light" ? "light" : "dark";
       } catch (_) {
-        document.documentElement.dataset.theme = "light";
+        document.documentElement.dataset.theme = "dark";
       }
     })();
   </script>
@@ -28,23 +28,26 @@
         <span class="brand-name">Práctica Emprendedora</span>
       </a>
 
-      <button class="menu-btn" aria-label="Abrir menú" aria-expanded="false">
-        <span></span><span></span><span></span>
-      </button>
-
       <nav class="nav-links" aria-label="Navegación principal">
         <a href="#que-es">Qué es</a>
         <a href="#como-funciona">Cómo funciona</a>
         <a href="#experiencia">Experiencia</a>
         <a href="#colegios">Para colegios</a>
         <a href="descargas.html">Descargas</a>
-        <button class="theme-toggle" type="button" data-theme-toggle aria-label="Cambiar a tema oscuro" title="Cambiar tema">
-          <svg class="theme-icon theme-icon-sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.93 4.93l1.42 1.42M17.65 17.65l1.42 1.42M2 12h2M20 12h2M4.93 19.07l1.42-1.42M17.65 6.35l1.42-1.42"></path></svg>
-          <svg class="theme-icon theme-icon-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20.2 15.2A8.5 8.5 0 0 1 8.8 3.8 8.7 8.7 0 1 0 20.2 15.2Z"></path></svg>
-          <span class="theme-toggle-label">Oscuro</span>
-        </button>
         <a class="nav-cta nav-cta-account" href="cuenta.html" data-auth-account-label data-auth-guest-only>Ingresar</a>
       </nav>
+
+      <div class="header-tools">
+        <button class="theme-toggle" type="button" data-theme-toggle aria-label="Cambiar tema" title="Cambiar tema">
+          <svg class="theme-icon theme-icon-sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.93 4.93l1.42 1.42M17.65 17.65l1.42 1.42M2 12h2M20 12h2M4.93 19.07l1.42-1.42M17.65 6.35l1.42-1.42"></path></svg>
+          <svg class="theme-icon theme-icon-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20.2 15.2A8.5 8.5 0 0 1 8.8 3.8 8.7 8.7 0 1 0 20.2 15.2Z"></path></svg>
+          <span class="theme-toggle-label">Tema</span>
+        </button>
+
+        <button class="menu-btn" aria-label="Abrir menú" aria-expanded="false">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
     </div>
   </header>
 
