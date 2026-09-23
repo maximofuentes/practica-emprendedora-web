@@ -6,19 +6,8 @@
   <meta name="theme-color" content="#0b1220" />
   <meta name="description" content="Creá tu cuenta de Práctica Emprendedora, descargá PE Admin y administrá tu licencia." />
   <title>Cuenta | Práctica Emprendedora</title>
-  <script>
-    (() => {
-      try {
-        const saved = localStorage.getItem("pe-theme");
-        document.documentElement.dataset.theme = saved === "light" ? "light" : "dark";
-      } catch (_) {
-        document.documentElement.dataset.theme = "dark";
-      }
-      const authMode = new URLSearchParams(location.search).get("mode");
-      document.documentElement.dataset.authMode = authMode === "signup" ? "signup" : "login";
-    })();
-  </script>
-  <link rel="icon" href="PE.png" type="image/png" />
+<link rel="icon" href="PE.png" type="image/png" />
+  <script src="theme-init.js"></script>
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body class="account-page">
@@ -264,11 +253,7 @@
       </div>
     </div>
   </footer>
-
-  <script>
-    document.querySelectorAll("[data-legal-year]").forEach(el => el.textContent = new Date().getFullYear());
-  </script>
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="supabase-config.js"></script>
   <script src="app.js"></script>
   <script src="cuenta.js"></script>

@@ -6,17 +6,8 @@
   <meta name="theme-color" content="#0b1220" />
   <meta name="description" content="Política de privacidad de Práctica Emprendedora." />
   <title>Política de privacidad | Práctica Emprendedora</title>
-  <script>
-    (() => {
-      try {
-        const saved = localStorage.getItem("pe-theme");
-        document.documentElement.dataset.theme = saved === "light" ? "light" : "dark";
-      } catch (_) {
-        document.documentElement.dataset.theme = "dark";
-      }
-    })();
-  </script>
-  <link rel="icon" href="PE.png" type="image/png" />
+<link rel="icon" href="PE.png" type="image/png" />
+  <script src="theme-init.js"></script>
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body class="legal-page">
@@ -153,33 +144,5 @@
       <div><a href="privacidad.html" aria-current="page">Privacidad</a><a href="terminos.html">Términos</a><a href="index.html">Inicio</a></div>
     </div>
   </footer>
-
-  <script>
-    (() => {
-      const root = document.documentElement;
-      const btn = document.querySelector("[data-legal-theme-toggle]");
-      const meta = document.querySelector('meta[name="theme-color"]');
-
-      const sync = () => {
-        const dark = root.dataset.theme !== "light";
-        if (btn) {
-          btn.setAttribute("aria-label", dark ? "Cambiar a tema claro" : "Cambiar a tema oscuro");
-          const label = btn.querySelector(".theme-toggle-label");
-          if (label) label.textContent = dark ? "Claro" : "Oscuro";
-        }
-        if (meta) meta.setAttribute("content", dark ? "#0b1220" : "#f5f7fa");
-      };
-
-      btn?.addEventListener("click", () => {
-        const next = root.dataset.theme === "light" ? "dark" : "light";
-        root.dataset.theme = next;
-        try { localStorage.setItem("pe-theme", next); } catch (_) {}
-        sync();
-      });
-
-      document.querySelectorAll("[data-legal-year]").forEach(el => el.textContent = new Date().getFullYear());
-      sync();
-    })();
-  </script>
 </body>
 </html>
