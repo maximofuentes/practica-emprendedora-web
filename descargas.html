@@ -4,15 +4,15 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="description" content="Descargá la edición de Práctica Emprendedora que necesitás." />
-  <meta name="theme-color" content="#ffffff" />
+  <meta name="theme-color" content="#0b1220" />
   <title>Descargas | Práctica Emprendedora</title>
   <script>
     (() => {
       try {
         const saved = localStorage.getItem("pe-theme");
-        document.documentElement.dataset.theme = saved === "dark" ? "dark" : "light";
+        document.documentElement.dataset.theme = saved === "light" ? "light" : "dark";
       } catch (_) {
-        document.documentElement.dataset.theme = "light";
+        document.documentElement.dataset.theme = "dark";
       }
     })();
   </script>
@@ -91,7 +91,15 @@
     </section>
   </main>
 
-  <footer class="download-footer"><div class="container download-footer-inner"><div class="download-footer-brand"><img src="PE.png" alt="" /><div><strong>Práctica Emprendedora</strong><span>Simulación empresarial educativa</span></div></div><p>© <span id="year"></span> Práctica Emprendedora</p></div></footer>
+  <footer class="download-footer">
+    <div class="container download-footer-inner">
+      <div class="download-footer-brand"><img src="PE.png" alt="" /><div><strong>Práctica Emprendedora</strong><span>Simulación empresarial educativa</span></div></div>
+      <div class="download-footer-meta">
+        <p>© <span id="year"></span> Práctica Emprendedora</p>
+        <div class="download-footer-legal"><a href="privacidad.html">Privacidad</a><a href="terminos.html">Términos</a></div>
+      </div>
+    </div>
+  </footer>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="supabase-config.js"></script>
   <script src="app.js"></script>

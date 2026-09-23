@@ -585,6 +585,36 @@
     await loadAccount(data.session);
   });
 
+  const googleLoginButton = $("googleLoginButton");
+  googleLoginButton?.addEventListener("click", async () => {
+    const label = googleLoginButton.querySelector(".google-auth-label");
+    const originalLabel = label?.textContent || "Continuar con Google";
+
+    googleLoginButton.disabled = true;
+    googleLoginButton.classList.add("is-loading");
+    if (label) label.textContent = "Abriendo Google…";
+    $("authMessage").classList.remove("success");
+    $("authMessage").textContent = "";
+
+    const redirectUrl = new URL(location.pathname, location.origin);
+    if (requestedNext) redirectUrl.searchParams.set("next", requestedNext);
+
+    const { error } = await sb.auth.signInWithOAuth({
+      provider: "google",
+      options: {
+        redirectTo: redirectUrl.toString()
+      }
+    });
+
+    if (error) {
+      console.error("Google OAuth error:", error);
+      googleLoginButton.disabled = false;
+      googleLoginButton.classList.remove("is-loading");
+      if (label) label.textContent = originalLabel;
+      $("authMessage").textContent = "No se pudo continuar con Google. Intentá nuevamente.";
+    }
+  });
+
   $("downloadAdminFromAccount").addEventListener("click", (e) => downloadAdmin(e.currentTarget));
   $("logoutButton").addEventListener("click", async () => { await sb.auth.signOut({ scope: "local" }); location.href = "cuenta.html"; });
   $("refreshAdmin").addEventListener("click", loadAdmin);

@@ -4328,3 +4328,723 @@ html[data-theme="dark"] .menu-btn span {
     min-height: 40px;
   }
 }
+
+/* ======================================================================
+   Acceso con Google · Supabase OAuth
+   ====================================================================== */
+.auth-oauth-block {
+  margin-top: 20px;
+}
+
+.auth-divider {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 2px 0 18px;
+  color: var(--muted-2);
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .08em;
+}
+
+.auth-divider::before,
+.auth-divider::after {
+  content: "";
+  height: 1px;
+  flex: 1 1 auto;
+  background: var(--line);
+}
+
+.auth-divider span {
+  padding: 0 12px;
+}
+
+.google-auth-btn {
+  width: 100%;
+  min-height: 50px;
+  padding: 0 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  border: 1px solid #c8cdd3;
+  border-radius: 7px;
+  background: #fff;
+  color: #1f1f1f;
+  box-shadow: none;
+  cursor: pointer;
+  font: inherit;
+  font-size: 14px;
+  font-weight: 700;
+  transition: background-color .16s ease, border-color .16s ease, box-shadow .16s ease, transform .16s ease;
+}
+
+.google-auth-btn:hover:not(:disabled) {
+  background: #f8faff;
+  border-color: #aeb7c2;
+  box-shadow: 0 2px 7px rgba(31, 41, 55, .09);
+  transform: translateY(-1px);
+}
+
+.google-auth-btn:active:not(:disabled) {
+  transform: translateY(0);
+  box-shadow: none;
+}
+
+.google-auth-btn:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+
+.google-auth-btn:disabled {
+  cursor: wait;
+  opacity: .72;
+}
+
+.google-auth-icon {
+  width: 18px;
+  height: 18px;
+  flex: 0 0 18px;
+}
+
+.google-auth-label {
+  line-height: 1;
+}
+
+.auth-oauth-note {
+  margin: 9px 0 0;
+  color: var(--muted-2);
+  font-size: 10.5px;
+  line-height: 1.5;
+  text-align: center;
+}
+
+html[data-theme="dark"] .google-auth-btn {
+  border-color: #d5dae0;
+  background: #fff;
+  color: #1f1f1f;
+}
+
+html[data-theme="dark"] .google-auth-btn:hover:not(:disabled) {
+  border-color: #fff;
+  background: #f4f7fb;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, .24);
+}
+
+@media (max-width: 560px) {
+  .auth-oauth-block {
+    margin-top: 18px;
+  }
+
+  .google-auth-btn {
+    min-height: 52px;
+    padding-inline: 14px;
+    font-size: 13.5px;
+  }
+
+  .auth-oauth-note {
+    padding-inline: 8px;
+  }
+}
+
+
+
+/* ======================================================================
+   PERFIL DE USUARIO · rediseño más limpio y corporativo
+   ====================================================================== */
+.pe-profile-menu {
+  margin-left: 4px;
+}
+
+.pe-profile-button {
+  width: auto;
+  min-width: 118px;
+  height: 42px;
+  padding: 4px 10px 4px 5px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 9px;
+  border: 1px solid var(--line-strong);
+  border-radius: 7px;
+  background: var(--surface);
+  color: var(--text);
+  box-shadow: none;
+}
+
+.pe-profile-button::after {
+  content: "Mi cuenta";
+  color: var(--text);
+  font-size: 12px;
+  font-weight: 760;
+  letter-spacing: -.01em;
+  white-space: nowrap;
+}
+
+.pe-profile-button::before {
+  content: "";
+  order: 3;
+  width: 7px;
+  height: 7px;
+  margin-left: 1px;
+  border-right: 1.5px solid var(--muted);
+  border-bottom: 1.5px solid var(--muted);
+  transform: rotate(45deg) translateY(-2px);
+  transition: transform .18s ease;
+}
+
+.pe-profile-menu.open .pe-profile-button::before {
+  transform: rotate(225deg) translate(-1px, -1px);
+}
+
+.pe-profile-button:hover,
+.pe-profile-menu.open .pe-profile-button {
+  transform: none;
+  border-color: var(--accent-border);
+  background: var(--surface-soft);
+  box-shadow: none;
+}
+
+.pe-profile-avatar {
+  width: 32px;
+  height: 32px;
+  border: 1px solid var(--line);
+  border-radius: 5px;
+  background: var(--accent-soft);
+  color: var(--accent);
+  font-size: 12px;
+  box-shadow: none;
+}
+
+.pe-profile-avatar-img {
+  border-radius: 4px;
+}
+
+.pe-profile-dropdown {
+  top: calc(100% + 9px);
+  width: min(350px, calc(100vw - 28px));
+  padding: 8px;
+  border: 1px solid var(--line-strong);
+  border-radius: 8px;
+  background: var(--surface);
+  box-shadow: 0 18px 48px rgba(5, 12, 24, .18);
+  backdrop-filter: none;
+}
+
+html[data-theme="dark"] .pe-profile-dropdown {
+  box-shadow: 0 20px 54px rgba(0, 0, 0, .34);
+}
+
+.pe-profile-summary {
+  gap: 11px;
+  padding: 11px 10px 13px;
+}
+
+.pe-profile-summary .pe-profile-avatar-large {
+  width: 42px;
+  height: 42px;
+  border-radius: 6px;
+}
+
+.pe-profile-summary strong {
+  font-size: 12.5px;
+  font-weight: 780;
+}
+
+.pe-profile-summary span:not(.pe-profile-avatar) {
+  font-size: 10.5px;
+}
+
+.pe-profile-license {
+  margin: 8px 0;
+  padding: 10px 11px;
+  border-radius: 5px;
+}
+
+.pe-profile-license span,
+.pe-profile-license strong {
+  font-size: 10px;
+}
+
+.pe-profile-action {
+  min-height: 41px;
+  padding: 0 10px;
+  border-radius: 5px;
+  font-size: 11.5px;
+}
+
+.pe-profile-action:hover {
+  transform: none;
+}
+
+.pe-profile-logout {
+  margin-top: 5px;
+  padding-top: 2px;
+}
+
+/* ======================================================================
+   LINKS LEGALES EN LOGIN / FOOTERS
+   ====================================================================== */
+.auth-provider-legal {
+  max-width: 430px;
+  margin: 12px auto 0;
+  color: var(--muted-2);
+  font-size: 10px;
+  line-height: 1.55;
+  text-align: center;
+}
+
+.auth-provider-legal a {
+  color: var(--text);
+  text-decoration: underline;
+  text-decoration-color: var(--line-strong);
+  text-underline-offset: 3px;
+}
+
+.auth-provider-legal a:hover {
+  color: var(--accent);
+}
+
+.account-legal-footer {
+  border-top: 1px solid var(--line);
+  background: var(--bg);
+}
+
+.account-legal-footer-inner,
+.legal-footer-inner {
+  min-height: 72px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  color: var(--muted-2);
+  font-size: 11px;
+}
+
+.account-legal-footer-inner > div,
+.legal-footer-inner > div,
+.footer-bottom-links,
+.download-footer-legal {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+}
+
+.account-legal-footer a,
+.legal-footer a,
+.footer-bottom-links a,
+.download-footer-legal a {
+  color: var(--muted);
+  transition: color .18s ease;
+}
+
+.account-legal-footer a:hover,
+.legal-footer a:hover,
+.footer-bottom-links a:hover,
+.download-footer-legal a:hover {
+  color: var(--text);
+}
+
+.download-footer-meta {
+  display: grid;
+  justify-items: end;
+  gap: 7px;
+}
+
+.download-footer-meta p {
+  margin: 0;
+}
+
+.download-footer-legal {
+  gap: 14px;
+  font-size: 10.5px;
+}
+
+/* ======================================================================
+   PÁGINAS LEGALES · Privacidad y Términos
+   ====================================================================== */
+.legal-page {
+  min-height: 100vh;
+  background: var(--bg);
+}
+
+.legal-main {
+  padding: 142px 0 92px;
+}
+
+.legal-layout {
+  display: grid;
+  grid-template-columns: 285px minmax(0, 760px);
+  justify-content: space-between;
+  gap: clamp(52px, 8vw, 110px);
+  align-items: start;
+}
+
+.legal-aside {
+  position: sticky;
+  top: 108px;
+}
+
+.legal-kicker {
+  display: block;
+  margin-bottom: 12px;
+  color: var(--accent);
+  font-size: 10px;
+  font-weight: 850;
+  letter-spacing: .11em;
+  text-transform: uppercase;
+}
+
+.legal-aside h1 {
+  margin: 0 0 15px;
+  font-size: clamp(34px, 4vw, 48px);
+  line-height: 1.03;
+  letter-spacing: -.045em;
+}
+
+.legal-aside > p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.65;
+}
+
+.legal-meta {
+  margin-top: 22px;
+  padding-top: 15px;
+  border-top: 1px solid var(--line);
+  color: var(--muted-2);
+  font-size: 10px;
+}
+
+.legal-local-nav {
+  margin-top: 28px;
+  display: grid;
+  gap: 2px;
+}
+
+.legal-local-nav a {
+  padding: 8px 0;
+  color: var(--muted);
+  font-size: 11px;
+  border-bottom: 1px solid transparent;
+}
+
+.legal-local-nav a:hover {
+  color: var(--text);
+}
+
+.legal-document {
+  min-width: 0;
+}
+
+.legal-intro {
+  margin-bottom: 52px;
+  padding-bottom: 34px;
+  border-bottom: 1px solid var(--line-strong);
+}
+
+.legal-intro p {
+  margin: 0;
+  color: var(--text);
+  font-size: clamp(18px, 2vw, 22px);
+  line-height: 1.65;
+  letter-spacing: -.018em;
+}
+
+.legal-section {
+  position: relative;
+  padding: 0 0 42px 58px;
+  scroll-margin-top: 110px;
+}
+
+.legal-section + .legal-section {
+  padding-top: 2px;
+}
+
+.legal-section-number {
+  position: absolute;
+  left: 0;
+  top: 5px;
+  color: var(--accent);
+  font-size: 10px;
+  font-weight: 850;
+  letter-spacing: .08em;
+}
+
+.legal-section h2 {
+  margin: 0 0 14px;
+  font-size: 23px;
+  line-height: 1.2;
+  letter-spacing: -.025em;
+}
+
+.legal-section p,
+.legal-section li {
+  color: var(--muted);
+  font-size: 13.5px;
+  line-height: 1.75;
+}
+
+.legal-section p {
+  margin: 0 0 13px;
+}
+
+.legal-section ul {
+  margin: 14px 0 16px;
+  padding-left: 20px;
+}
+
+.legal-section li + li {
+  margin-top: 8px;
+}
+
+.legal-section strong {
+  color: var(--text);
+}
+
+.legal-section a:not(.legal-contact-link) {
+  color: var(--accent);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.legal-callout {
+  margin-top: 22px;
+  padding: 18px 20px;
+  border-left: 3px solid var(--accent);
+  background: var(--surface-soft);
+}
+
+.legal-callout strong {
+  display: block;
+  margin-bottom: 5px;
+  font-size: 12px;
+}
+
+.legal-callout p {
+  margin: 0;
+  font-size: 12px;
+}
+
+.legal-provider-grid {
+  margin: 20px 0;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  border-top: 1px solid var(--line);
+  border-left: 1px solid var(--line);
+}
+
+.legal-provider-grid > div {
+  min-height: 130px;
+  padding: 20px;
+  border-right: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+  background: var(--surface);
+}
+
+.legal-provider-grid strong,
+.legal-provider-grid span {
+  display: block;
+}
+
+.legal-provider-grid strong {
+  margin-bottom: 8px;
+  font-size: 13px;
+}
+
+.legal-provider-grid span {
+  color: var(--muted);
+  font-size: 11.5px;
+  line-height: 1.6;
+}
+
+.legal-contact-section {
+  padding-bottom: 10px;
+}
+
+.legal-contact-link {
+  min-height: 46px;
+  margin-top: 17px;
+  padding: 0 15px;
+  display: inline-flex;
+  align-items: center;
+  gap: 22px;
+  border: 1px solid var(--line-strong);
+  border-radius: 5px;
+  background: var(--surface);
+  color: var(--text);
+  font-size: 12px;
+  font-weight: 750;
+}
+
+.legal-contact-link:hover {
+  border-color: var(--accent-border);
+  color: var(--accent);
+}
+
+.legal-footer {
+  border-top: 1px solid var(--line);
+}
+
+.legal-footer a[aria-current="page"] {
+  color: var(--text);
+  font-weight: 700;
+}
+
+/* Footer con columna legal */
+.footer-top {
+  grid-template-columns: minmax(0, 1.22fr) minmax(130px, .48fr) minmax(150px, .55fr) minmax(260px, .86fr);
+}
+
+.footer-bottom-links {
+  justify-content: flex-end;
+}
+
+@media (max-width: 1000px) {
+  .footer-top {
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+
+  .footer-brand-block {
+    grid-column: 1 / -1;
+  }
+
+  .legal-layout {
+    grid-template-columns: 230px minmax(0, 1fr);
+    gap: 48px;
+  }
+}
+
+@media (max-width: 780px) {
+  .pe-profile-button {
+    min-width: 42px;
+    width: 42px;
+    padding: 4px;
+    justify-content: center;
+  }
+
+  .pe-profile-button::after,
+  .pe-profile-button::before {
+    display: none;
+  }
+
+  .pe-profile-avatar {
+    width: 32px;
+    height: 32px;
+  }
+
+  .nav-links .pe-profile-menu {
+    align-self: stretch;
+  }
+
+  .nav-links .pe-profile-button {
+    width: 100%;
+    min-width: 0;
+    justify-content: flex-start;
+    padding: 8px;
+  }
+
+  .nav-links .pe-profile-button::after {
+    display: inline;
+  }
+
+  .legal-main {
+    padding: 112px 0 70px;
+  }
+
+  .legal-layout {
+    grid-template-columns: 1fr;
+    gap: 42px;
+  }
+
+  .legal-aside {
+    position: static;
+  }
+
+  .legal-local-nav {
+    display: none;
+  }
+
+  .legal-document {
+    max-width: none;
+  }
+
+  .legal-section {
+    padding-left: 42px;
+  }
+
+  .legal-provider-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .footer-top {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .footer-contact {
+    grid-column: 1 / -1;
+  }
+
+  .account-legal-footer-inner,
+  .legal-footer-inner {
+    min-height: 88px;
+    align-items: flex-start;
+    flex-direction: column;
+    justify-content: center;
+    gap: 9px;
+  }
+
+  .download-footer-meta {
+    justify-items: center;
+  }
+
+  .footer-bottom {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .footer-bottom-links {
+    width: 100%;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+  }
+}
+
+@media (max-width: 520px) {
+  .legal-main {
+    padding-top: 100px;
+  }
+
+  .legal-aside h1 {
+    font-size: 36px;
+  }
+
+  .legal-section {
+    padding: 0 0 36px 34px;
+  }
+
+  .legal-section h2 {
+    font-size: 21px;
+  }
+
+  .legal-intro {
+    margin-bottom: 40px;
+  }
+
+  .legal-contact-link {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .footer-top {
+    grid-template-columns: 1fr;
+  }
+
+  .footer-brand-block,
+  .footer-contact {
+    grid-column: auto;
+  }
+}
